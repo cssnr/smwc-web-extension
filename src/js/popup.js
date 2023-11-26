@@ -10,6 +10,10 @@ buttons.forEach((el) => el.addEventListener('click', popupClick))
 const formInputs = document.querySelectorAll('.pop-options')
 formInputs.forEach((el) => el.addEventListener('change', saveOptions))
 
+document.getElementsByName('searchType').forEach((el) => {
+    el.addEventListener('change', updateSearchType)
+})
+
 document.getElementById('patch-form').addEventListener('submit', patchForm)
 
 /**
@@ -22,8 +26,13 @@ async function initPopup() {
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
 
-    const { options } = await chrome.storage.sync.get(['options'])
-    console.log('options:', options)
+    const { options, popup } = await chrome.storage.sync.get([
+        'options',
+        'popup',
+    ])
+    console.log('options, popup:', options, popup)
+
+    document.getElementById(popup.searchType).checked = true
     updateOptions(options)
 }
 
@@ -56,6 +65,23 @@ async function popupClick(event) {
 }
 
 /**
+ * Save Default Radio on Change Callback
+ * @function updateSearchType
+ * @param {SubmitEvent} event
+ */
+async function updateSearchType(event) {
+    console.log('updateSearchType:', event)
+    let { popup } = await chrome.storage.sync.get(['popup'])
+    popup.searchType = event.target.id
+    await chrome.storage.sync.set({ popup })
+    const value = document.getElementById('patch-input').value
+    console.log('value:', value)
+    if (value) {
+        await patchForm(event)
+    }
+}
+
+/**
  * Links Form Callback
  * @function patchForm
  * @param {SubmitEvent} event
@@ -63,6 +89,9 @@ async function popupClick(event) {
 async function patchForm(event) {
     console.log('linksForm:', event)
     event.preventDefault()
-    const value = event.target[0].value
-    patchRom(value, 'download')
+    const value = document.getElementById('patch-input').value
+    console.log('value:', value)
+    const key = document.querySelector('input[name="searchType"]:checked').value
+    console.log('key:', key)
+    patchRom(value, key)
 }

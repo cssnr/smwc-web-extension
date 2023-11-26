@@ -6,7 +6,7 @@ chrome.commands.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
 
-const ghUrl = 'https://github.com/cssnr/simple-extension'
+const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
 
 /**
  * On Install Callback
@@ -133,7 +133,7 @@ function createContextMenus() {
  */
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions')
-    let { options } = await chrome.storage.sync.get(['options'])
+    let { options, popup } = await chrome.storage.sync.get(['options', 'popup'])
     options = options || {}
     console.log(options)
     let changed = false
@@ -148,6 +148,11 @@ async function setDefaultOptions(defaultOptions) {
     if (changed) {
         await chrome.storage.sync.set({ options })
         console.log(options)
+    }
+    // TODO: Handle popup default(s) differently
+    if (popup?.searchType === undefined) {
+        popup = { searchType: 'doPatch' }
+        await chrome.storage.sync.set({ popup })
     }
     return options
 }
