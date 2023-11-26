@@ -32,8 +32,9 @@ export function updateOptions(options) {
  * Patch ROM and open URL at key
  * @param {String} url
  * @param {String} key
+ * @param {Function} callback
  */
-export function patchRom(url, key) {
+export function patchRom(url, key, callback) {
     const smwcWorld = 'https://smwc.world/patcher/'
     const sourceRom =
         'https://github.com/videofindersTV/super-mario-world/raw/master/Super.Mario.World.1.smc'
@@ -47,20 +48,8 @@ export function patchRom(url, key) {
         redirect: 'follow',
     }
 
-    // TODO: Pass this in as an argument
-    const callback = (result) => {
-        console.log(result)
-        if (result.error?.__all__) {
-            console.warn(result.error.__all__[0])
-        } else if (result[key]) {
-            chrome.tabs.create({ active: true, url: result[key] }).then()
-        } else {
-            console.warn('Unknown Result:', result)
-        }
-    }
-
     fetch(smwcWorld, requestOptions)
         .then((response) => response.json())
-        .then((result) => callback(result))
+        .then((result) => callback(result, key))
         .catch((error) => console.warn('error', error))
 }

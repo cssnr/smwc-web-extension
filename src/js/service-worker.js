@@ -47,13 +47,23 @@ async function onInstalled(details) {
  */
 async function onClicked(ctx, tab) {
     console.log('onClicked:', ctx, tab)
+    const callback = (result, key) => {
+        console.log('service-worker callback:', result)
+        if (result.error?.__all__) {
+            console.warn(result.error.__all__[0])
+        } else if (result[key]) {
+            chrome.tabs.create({ active: true, url: result[key] }).then()
+        } else {
+            console.warn('Unknown Result:', result)
+        }
+    }
     if (ctx.menuItemId === 'options') {
         const url = chrome.runtime.getURL('/html/options.html')
         await chrome.tabs.create({ active: true, url })
     } else if (ctx.menuItemId === 'rom_patch') {
-        patchRom(ctx.linkUrl, 'download')
+        patchRom(ctx.linkUrl, 'download', callback)
     } else if (ctx.menuItemId === 'rom_play') {
-        patchRom(ctx.linkUrl, 'play')
+        patchRom(ctx.linkUrl, 'play', callback)
     } else {
         console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
     }

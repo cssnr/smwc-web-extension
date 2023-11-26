@@ -93,7 +93,16 @@ async function patchForm(event) {
     console.log('value:', value)
     const key = document.querySelector('input[name="searchType"]:checked').value
     console.log('key:', key)
-    // TODO: Add Callback
-    patchRom(value, key)
-    return window.close()
+    const callback = (result, key) => {
+        console.log('popup callback:', result)
+        if (result.error?.__all__) {
+            console.warn(result.error.__all__[0])
+        } else if (result[key]) {
+            chrome.tabs.create({ active: true, url: result[key] }).then()
+            return window.close()
+        } else {
+            console.warn('Unknown Result:', result)
+        }
+    }
+    patchRom(value, key, callback)
 }
