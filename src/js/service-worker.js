@@ -159,7 +159,6 @@ async function setDefaultOptions(defaultOptions) {
 
 /**
  * Save Options Callback
- * TODO: Duplicate Function
  * @function saveOptions
  * @param {InputEvent} event
  */
@@ -173,7 +172,6 @@ export async function saveOptions(event) {
 
 /**
  * Update Options
- * TODO: Duplicate Function
  * @function initOptions
  * @param {Object} options
  */
@@ -206,9 +204,16 @@ export function patchRom(url, key) {
         redirect: 'follow',
     }
 
+    // TODO: Pass this in as an argument
     const callback = (result) => {
         console.log(result)
-        chrome.tabs.create({ active: true, url: result[key] }).then()
+        if (result.error?.__all__) {
+            console.warn(result.error.__all__[0])
+        } else if (result[key]) {
+            chrome.tabs.create({ active: true, url: result[key] }).then()
+        } else {
+            console.warn('Unknown Result:', result)
+        }
     }
 
     fetch(smwcWorld, requestOptions)

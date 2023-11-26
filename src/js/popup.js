@@ -93,5 +93,7 @@ async function patchForm(event) {
     console.log('value:', value)
     const key = document.querySelector('input[name="searchType"]:checked').value
     console.log('key:', key)
+    // TODO: Add Callback
     patchRom(value, key)
+    return window.close()
 }

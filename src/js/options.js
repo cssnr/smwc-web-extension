@@ -9,6 +9,8 @@ chrome.storage.onChanged.addListener(onChanged)
 const formInputs = document.querySelectorAll('.form-control')
 formInputs.forEach((el) => el.addEventListener('change', saveOptions))
 
+// document.getElementById('advanced').addEventListener('submit', saveAdvanced)
+
 /**
  * Initialize Options
  * @function initOptions
@@ -42,3 +44,19 @@ function onChanged(changes, namespace) {
         }
     }
 }
+
+// /**
+//  * Save Options Click
+//  * @function saveAdvanced
+//  * @param {SubmitEvent} event
+//  */
+// async function saveAdvanced(event) {
+//     console.log('saveOptions:', event)
+//     event.preventDefault()
+//     // const { url } = await chrome.storage.local.get(['url'])
+//     const input = document.getElementById('url')
+//     const url = input.value.replace(/\/$/, '')
+//     input.value = url
+//     console.log(`url: ${url}`)
+//     await chrome.storage.local.set({ url })
+// }
