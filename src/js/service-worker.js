@@ -8,7 +8,10 @@ chrome.commands.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
 
-const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
+chrome.notifications.onClicked.addListener((notificationId) => {
+    console.log(`notifications.onClicked: ${notificationId}`)
+    chrome.notifications.clear(notificationId)
+})
 
 /**
  * On Install Callback
@@ -17,6 +20,7 @@ const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
+    const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
     const defaultOptions = {
         contextMenu: true,
         showUpdate: false,
@@ -47,15 +51,16 @@ async function onInstalled(details) {
  */
 async function onClicked(ctx, tab) {
     console.log('onClicked:', ctx, tab)
-    // TODO: Add Error Handling
     const callback = (result, key) => {
         console.log('service-worker callback:', result)
         if (result[key]) {
             chrome.tabs.create({ active: true, url: result[key] }).then()
         } else if (result.error?.__all__) {
             console.warn(result.error.__all__[0])
+            sendNotification('Error', result.error.__all__[0])
         } else {
             console.warn('Unknown Result:', result)
+            sendNotification('Error', 'Unknown Error. Check the Logs...')
         }
     }
     if (ctx.menuItemId === 'options') {
@@ -168,4 +173,27 @@ async function setDefaultOptions(defaultOptions) {
         await chrome.storage.sync.set({ popup })
     }
     return options
+}
+
+/**
+ * Send Browser Notification
+ * @function sendNotification
+ * @param {String} title
+ * @param {String} text
+ * @param {String} id
+ * @param {Number} timeout
+ */
+async function sendNotification(title, text, id = '', timeout = 6) {
+    console.log(`sendNotification: ${id || 'randomID'}: ${title} - ${text}`)
+    const options = {
+        type: 'basic',
+        iconUrl: chrome.runtime.getURL('images/logo96.png'),
+        title: title,
+        message: text,
+    }
+    chrome.notifications.create(id, options, function (notification) {
+        setTimeout(function () {
+            chrome.notifications.clear(notification)
+        }, timeout * 1000)
+    })
 }

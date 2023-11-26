@@ -13,7 +13,7 @@
       "description": "Show Main Popup Action"
     }
   },
-  "permissions": ["contextMenus", "storage"],
+  "permissions": ["contextMenus", "notifications", "storage"],
   "background": {
     "type": "module"
   },
