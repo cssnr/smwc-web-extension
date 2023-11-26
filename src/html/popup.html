@@ -19,10 +19,12 @@
             SMW Central Rom Hacks
         </a>
         <form id="patch-form">
-            <label for="patch-input" class="visually-hidden">Patch Input</label>
-            <input id="patch-input" class="form-control form-control-sm" type="text" placeholder="Quick Patch/Play URL">
+            <label for="patch-input" class="visually-hidden">Patch URL</label>
+            <div class="input-group">
+                <input id="patch-input" type="text" class="form-control form-control-sm" placeholder="Quick Patch/Play URL" aria-label="Patch URL" aria-describedby="patch-rom">
+                <button class="btn btn-outline-secondary" type="submit" id="patch-rom">Go</button>
+            </div>
         </form>
-
         <div class="row text-center">
             <div class="col-6">
                 <div class="form-check form-check-inline">
@@ -37,13 +39,9 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-<!--    <div id="popup-alert" class="alert alert-warning" role="alert"></div>-->
-
+    <div id="popup-alert" class="alert alert-warning mt-2 visually-hidden" role="alert"></div>
     <hr class="my-2">
-
     <div class="form-check form-switch">
         <input class="form-check-input form-control pop-options" type="checkbox" role="switch" id="contextMenu">
         <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>

@@ -47,12 +47,13 @@ async function onInstalled(details) {
  */
 async function onClicked(ctx, tab) {
     console.log('onClicked:', ctx, tab)
+    // TODO: Add Error Handling
     const callback = (result, key) => {
         console.log('service-worker callback:', result)
-        if (result.error?.__all__) {
-            console.warn(result.error.__all__[0])
-        } else if (result[key]) {
+        if (result[key]) {
             chrome.tabs.create({ active: true, url: result[key] }).then()
+        } else if (result.error?.__all__) {
+            console.warn(result.error.__all__[0])
         } else {
             console.warn('Unknown Result:', result)
         }
@@ -161,7 +162,7 @@ async function setDefaultOptions(defaultOptions) {
         await chrome.storage.sync.set({ options })
         console.log(options)
     }
-    // TODO: Handle popup default(s) differently
+    // TODO: Handle popup default(s) differently?
     if (popup?.searchType === undefined) {
         popup = { searchType: 'doPatch' }
         await chrome.storage.sync.set({ popup })
