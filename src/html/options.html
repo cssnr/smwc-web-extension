@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>SMWC Web Extension</title>
+    <link rel="icon" href="../images/logo16.png" sizes="any">
+    <link rel="stylesheet" type="text/css" href="../dist/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/options.css">
+    <script type="text/javascript" src="../js/theme.js"></script>
+</head>
+<body>
+
+<div class="container-fluid p-3">
+    <div class="row">
+        <div class="col-xl-6 col-md-8 col-12 m-auto">
+            <div class="card" >
+                <div class="card-body">
+                    <div class="justify-content-center align-items-center d-flex">
+                        <img src="../images/logo48.png" class="img-fluid float-start me-2" alt="SMWC Web Extension" height="48" width="48">
+                        <h1 class="align-middle">SMWC Web Extension</h1>
+                    </div>
+                    <div class="clearfix"></div>
+                    <p class="text-center lead">v<span id="version"></span></p>
+                    <table class="table table-sm table-borderless table-hover">
+                        <caption class="visually-hidden">Keyboard Shortcuts</caption>
+                        <thead class="visually-hidden"><tr><th>Description</th><th>Shortcut</th></tr></thead>
+                        <tbody>
+                        <tr>
+                            <td>Show Popup Action</td>
+                            <td class="text-end"><kbd id="mainKey">Unknown</kbd></td>
+                        </tr>
+                        <tr>
+                            <td>Open Main Page</td>
+                            <td class="text-end"><kbd id="openPage">Unknown</kbd></td>
+                        </tr>
+                        <tr>
+                            <td>Show Main Window</td>
+                            <td class="text-end"><kbd id="showWindow">Unknown</kbd></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <form id="filters-form">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input form-control" type="checkbox" role="switch" id="contextMenu">
+                            <label class="form-check-label" for="contextMenu" aria-describedby="contextMenuHelp">Enable Right Click Menu</label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input form-control" type="checkbox" role="switch" id="showUpdate">
+                            <label class="form-check-label" for="showUpdate" aria-describedby="showUpdateHelp">Show Release Notes on Update</label>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
+                           href="https://github.com/cssnr">Get Help</a>
+                        |
+                        <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
+                           href="https://github.com/cssnr">Request Feature</a>
+                        |
+                        <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
+                           href="https://github.com/cssnr">Open Issue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
+<script type="module" src="../js/options.js"></script>
+
+</body>
+</html>

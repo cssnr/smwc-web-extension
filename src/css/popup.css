@@ -1,0 +1,8 @@
+body {
+    width: 320px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    text-align: center;
+}
