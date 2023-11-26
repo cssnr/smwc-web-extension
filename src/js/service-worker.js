@@ -1,12 +1,17 @@
 // JS Background Service Worker
 
+import { patchRom } from './exports.js'
+
 chrome.runtime.onInstalled.addListener(onInstalled)
 chrome.contextMenus.onClicked.addListener(onClicked)
 chrome.commands.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
 
-const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
+chrome.notifications.onClicked.addListener((notificationId) => {
+    console.log(`notifications.onClicked: ${notificationId}`)
+    chrome.notifications.clear(notificationId)
+})
 
 /**
  * On Install Callback
@@ -15,6 +20,7 @@ const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
+    const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
     const defaultOptions = {
         contextMenu: true,
         showUpdate: false,
@@ -45,13 +51,25 @@ async function onInstalled(details) {
  */
 async function onClicked(ctx, tab) {
     console.log('onClicked:', ctx, tab)
+    const callback = (result, key) => {
+        console.log('service-worker callback:', result)
+        if (result[key]) {
+            chrome.tabs.create({ active: true, url: result[key] }).then()
+        } else if (result.error?.__all__) {
+            console.warn(result.error.__all__[0])
+            sendNotification('Error', result.error.__all__[0])
+        } else {
+            console.warn('Unknown Result:', result)
+            sendNotification('Error', 'Unknown Error. Check the Logs...')
+        }
+    }
     if (ctx.menuItemId === 'options') {
         const url = chrome.runtime.getURL('/html/options.html')
         await chrome.tabs.create({ active: true, url })
     } else if (ctx.menuItemId === 'rom_patch') {
-        patchRom(ctx.linkUrl, 'download')
+        patchRom(ctx.linkUrl, 'download', callback)
     } else if (ctx.menuItemId === 'rom_play') {
-        patchRom(ctx.linkUrl, 'play')
+        patchRom(ctx.linkUrl, 'play', callback)
     } else {
         console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
     }
@@ -149,7 +167,7 @@ async function setDefaultOptions(defaultOptions) {
         await chrome.storage.sync.set({ options })
         console.log(options)
     }
-    // TODO: Handle popup default(s) differently
+    // TODO: Handle popup default(s) differently?
     if (popup?.searchType === undefined) {
         popup = { searchType: 'doPatch' }
         await chrome.storage.sync.set({ popup })
@@ -158,66 +176,24 @@ async function setDefaultOptions(defaultOptions) {
 }
 
 /**
- * Save Options Callback
- * @function saveOptions
- * @param {InputEvent} event
+ * Send Browser Notification
+ * @function sendNotification
+ * @param {String} title
+ * @param {String} text
+ * @param {String} id
+ * @param {Number} timeout
  */
-export async function saveOptions(event) {
-    console.log('saveOptions:', event)
-    let { options } = await chrome.storage.sync.get(['options'])
-    options[event.target.id] = event.target.checked
-    console.log(`Set: options[${event.target.id}]: ${options[event.target.id]}`)
-    await chrome.storage.sync.set({ options })
-}
-
-/**
- * Update Options
- * @function initOptions
- * @param {Object} options
- */
-export function updateOptions(options) {
-    for (const [key, value] of Object.entries(options)) {
-        // console.log(`${key}: ${value}`)
-        const element = document.getElementById(key)
-        if (element) {
-            element.checked = value
-        }
+async function sendNotification(title, text, id = '', timeout = 6) {
+    console.log(`sendNotification: ${id || 'randomID'}: ${title} - ${text}`)
+    const options = {
+        type: 'basic',
+        iconUrl: chrome.runtime.getURL('images/logo96.png'),
+        title: title,
+        message: text,
     }
-}
-
-/**
- * Patch ROM and open URL at key
- * @param {String} url
- * @param {String} key
- */
-export function patchRom(url, key) {
-    const smwcWorld = 'https://smwc.world/patcher/'
-    const sourceRom =
-        'https://github.com/videofindersTV/super-mario-world/raw/master/Super.Mario.World.1.smc'
-    const formdata = new FormData()
-    formdata.append('patch_url', url)
-    formdata.append('source_url', sourceRom)
-
-    const requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow',
-    }
-
-    // TODO: Pass this in as an argument
-    const callback = (result) => {
-        console.log(result)
-        if (result.error?.__all__) {
-            console.warn(result.error.__all__[0])
-        } else if (result[key]) {
-            chrome.tabs.create({ active: true, url: result[key] }).then()
-        } else {
-            console.warn('Unknown Result:', result)
-        }
-    }
-
-    fetch(smwcWorld, requestOptions)
-        .then((response) => response.json())
-        .then((result) => callback(result))
-        .catch((error) => console.warn('error', error))
+    chrome.notifications.create(id, options, function (notification) {
+        setTimeout(function () {
+            chrome.notifications.clear(notification)
+        }, timeout * 1000)
+    })
 }

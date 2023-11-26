@@ -6,6 +6,7 @@
 [![Manifest Version](https://img.shields.io/github/manifest-json/v/cssnr/smwc-web-extension?filename=manifest.json&logo=json&label=manifest)](https://github.com/cssnr/smwc-web-extension/blob/master/manifest.json)
 [![Build](https://github.com/cssnr/smwc-web-extension/actions/workflows/build.yaml/badge.svg)](https://github.com/cssnr/smwc-web-extension/actions/workflows/build.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_smwc-web-extension&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_smwc-web-extension)
+[![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/ZrRbfdE6kz)
 # SMWC Web Extension
 
 Modern Chrome and Firefox Addon to easily Patch and Play ROMs Online via [smwc.world](https://smwc.world).

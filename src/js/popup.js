@@ -1,6 +1,6 @@
 // JS for popup.html
 
-import { patchRom, saveOptions, updateOptions } from './service-worker.js'
+import { patchRom, saveOptions, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 
@@ -93,7 +93,30 @@ async function patchForm(event) {
     console.log('value:', value)
     const key = document.querySelector('input[name="searchType"]:checked').value
     console.log('key:', key)
-    // TODO: Add Callback
-    patchRom(value, key)
-    return window.close()
+    const callback = (result, key) => {
+        console.log('popup callback:', result)
+        if (result[key]) {
+            chrome.tabs.create({ active: true, url: result[key] }).then()
+            window.close()
+        } else if (result.error?.__all__) {
+            console.warn(result.error.__all__[0])
+            showAlert(result.error.__all__[0])
+        } else {
+            console.warn('Unknown Result:', result)
+            showAlert('Unknown Error. Check Logs...')
+        }
+    }
+    patchRom(value, key, callback)
+}
+
+function showAlert(message) {
+    console.log('showAlert:', message)
+    const alert = document.getElementById('popup-alert')
+    alert.textContent = message
+    alert.classList.remove('visually-hidden')
+    $('#popup-alert')
+        .fadeTo(5000, 500)
+        .slideUp(500, function () {
+            $('#popup-alert').slideUp(500)
+        })
 }
