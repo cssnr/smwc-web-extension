@@ -191,7 +191,7 @@ export function updateOptions(options) {
  * @param {String} key
  */
 export function patchRom(url, key) {
-    const smwcWorld = 'https://intranet.cssnr.com/patcher/'
+    const smwcWorld = 'https://smwc.world/patcher/'
     const sourceRom =
         'https://github.com/videofindersTV/super-mario-world/raw/master/Super.Mario.World.1.smc'
     const formdata = new FormData()
