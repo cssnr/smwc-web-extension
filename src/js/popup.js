@@ -1,6 +1,6 @@
 // JS for popup.html
 
-import { patchRom, saveOptions, updateOptions } from './service-worker.js'
+import { patchRom, saveOptions, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 

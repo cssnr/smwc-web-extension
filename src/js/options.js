@@ -1,6 +1,6 @@
 // JS for options.html
 
-import { saveOptions, updateOptions } from './service-worker.js'
+import { saveOptions, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initOptions)
 
