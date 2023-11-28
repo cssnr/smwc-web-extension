@@ -126,10 +126,10 @@ function onChanged(changes, namespace) {
  */
 function createContextMenus() {
     console.log('createContextMenus')
-    const ctx = ['all']
+    const ctx = ['link']
     const contexts = [
-        [['link'], 'rom_patch', 'normal', 'Patch ROM'],
-        [['link'], 'rom_play', 'normal', 'Play ROM'],
+        [ctx, 'rom_patch', 'normal', 'Patch ROM'],
+        [ctx, 'rom_play', 'normal', 'Play ROM'],
         [ctx, 'separator-1', 'separator', 'separator'],
         [ctx, 'options', 'normal', 'Open Options'],
     ]
