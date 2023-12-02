@@ -4,8 +4,8 @@ import { patchRom, saveOptions, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 
-const buttons = document.querySelectorAll('.popup-click')
-buttons.forEach((el) => el.addEventListener('click', popLinks))
+const popupLinks = document.querySelectorAll('[data-href]')
+popupLinks.forEach((el) => el.addEventListener('click', popLinks))
 
 const formInputs = document.querySelectorAll('.pop-options')
 formInputs.forEach((el) => el.addEventListener('change', saveOptions))
@@ -37,7 +37,8 @@ async function initPopup() {
 }
 
 /**
- * Handle Popup Link Clicks
+ * Popup Links Click Callback
+ * Firefox requires a call to window.close()
  * @function popLinks
  * @param {MouseEvent} event
  */
@@ -58,7 +59,7 @@ async function popLinks(event) {
     }
     console.log('url:', url)
     if (!url) {
-        return console.warn('No dataset.href for anchor:', anchor)
+        return console.error('No dataset.href for anchor:', anchor)
     }
     await chrome.tabs.create({ active: true, url })
     return window.close()
