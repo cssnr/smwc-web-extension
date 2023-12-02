@@ -7,12 +7,11 @@ document.addEventListener('DOMContentLoaded', initPopup)
 const popupLinks = document.querySelectorAll('[data-href]')
 popupLinks.forEach((el) => el.addEventListener('click', popLinks))
 
-const formInputs = document.querySelectorAll('.pop-options')
+const formInputs = document.querySelectorAll('.options')
 formInputs.forEach((el) => el.addEventListener('change', saveOptions))
 
-document.getElementsByName('searchType').forEach((el) => {
-    el.addEventListener('change', updateSearchType)
-})
+const searchTypes = document.getElementsByName('searchType')
+searchTypes.forEach((el) => el.addEventListener('change', updateSearchType))
 
 document.getElementById('patch-form').addEventListener('submit', patchForm)
 
@@ -25,13 +24,11 @@ async function initPopup() {
     document.getElementById('patch-input').focus()
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
-
     const { options, popup } = await chrome.storage.sync.get([
         'options',
         'popup',
     ])
     console.log('options, popup:', options, popup)
-
     document.getElementById(popup.searchType).checked = true
     updateOptions(options)
 }
