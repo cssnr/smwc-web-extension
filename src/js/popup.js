@@ -4,15 +4,14 @@ import { patchRom, saveOptions, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 
-const buttons = document.querySelectorAll('.popup-click')
-buttons.forEach((el) => el.addEventListener('click', popupClick))
+const popupLinks = document.querySelectorAll('[data-href]')
+popupLinks.forEach((el) => el.addEventListener('click', popLinks))
 
-const formInputs = document.querySelectorAll('.pop-options')
+const formInputs = document.querySelectorAll('.options')
 formInputs.forEach((el) => el.addEventListener('change', saveOptions))
 
-document.getElementsByName('searchType').forEach((el) => {
-    el.addEventListener('change', updateSearchType)
-})
+const searchTypes = document.getElementsByName('searchType')
+searchTypes.forEach((el) => el.addEventListener('change', updateSearchType))
 
 document.getElementById('patch-form').addEventListener('submit', patchForm)
 
@@ -25,42 +24,41 @@ async function initPopup() {
     document.getElementById('patch-input').focus()
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
-
     const { options, popup } = await chrome.storage.sync.get([
         'options',
         'popup',
     ])
     console.log('options, popup:', options, popup)
-
     document.getElementById(popup.searchType).checked = true
     updateOptions(options)
 }
 
 /**
- * Handle Popup Clicks
- * @function popupClick
+ * Popup Links Click Callback
+ * Firefox requires a call to window.close()
+ * @function popLinks
  * @param {MouseEvent} event
  */
-async function popupClick(event) {
-    console.log('popupClick:', event)
+async function popLinks(event) {
+    console.log('popLinks:', event)
     event.preventDefault()
-    let url
     const anchor = event.target.closest('a')
-    if (anchor?.dataset?.href) {
-        if (anchor.dataset.href === 'homepage_url') {
-            url = chrome.runtime.getManifest().homepage_url
-        } else if (anchor.dataset.href.startsWith('http')) {
-            url = anchor.dataset.href
-        } else {
-            url = chrome.runtime.getURL(anchor.dataset.href)
-        }
+    let url
+    if (anchor?.dataset?.href.startsWith('http')) {
+        url = anchor.dataset.href
+    } else if (anchor?.dataset?.href === 'homepage') {
+        url = chrome.runtime.getManifest().homepage_url
+    } else if (anchor?.dataset?.href === 'options') {
+        chrome.runtime.openOptionsPage()
+        return window.close()
+    } else if (anchor?.dataset?.href) {
+        url = chrome.runtime.getURL(anchor.dataset.href)
     }
-    console.log(`url: ${url}`)
-    if (url) {
-        await chrome.tabs.create({ active: true, url })
-    } else {
-        console.warn('No dataset.href for anchor:', anchor)
+    console.log('url:', url)
+    if (!url) {
+        return console.error('No dataset.href for anchor:', anchor)
     }
+    await chrome.tabs.create({ active: true, url })
     return window.close()
 }
 

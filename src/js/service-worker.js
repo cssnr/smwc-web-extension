@@ -30,8 +30,7 @@ async function onInstalled(details) {
         createContextMenus()
     }
     if (details.reason === 'install') {
-        const url = chrome.runtime.getURL('/html/options.html')
-        await chrome.tabs.create({ active: true, url })
+        chrome.runtime.openOptionsPage()
     } else if (options.showUpdate && details.reason === 'update') {
         const manifest = chrome.runtime.getManifest()
         if (manifest.version !== details.previousVersion) {
@@ -64,8 +63,7 @@ async function onClicked(ctx, tab) {
         }
     }
     if (ctx.menuItemId === 'options') {
-        const url = chrome.runtime.getURL('/html/options.html')
-        await chrome.tabs.create({ active: true, url })
+        chrome.runtime.openOptionsPage()
     } else if (ctx.menuItemId === 'rom_patch') {
         patchRom(ctx.linkUrl, 'download', callback)
     } else if (ctx.menuItemId === 'rom_play') {
@@ -126,10 +124,10 @@ function onChanged(changes, namespace) {
  */
 function createContextMenus() {
     console.log('createContextMenus')
-    const ctx = ['all']
+    const ctx = ['link']
     const contexts = [
-        [['link'], 'rom_patch', 'normal', 'Patch ROM'],
-        [['link'], 'rom_play', 'normal', 'Play ROM'],
+        [ctx, 'rom_patch', 'normal', 'Patch ROM'],
+        [ctx, 'rom_play', 'normal', 'Play ROM'],
         [ctx, 'separator-1', 'separator', 'separator'],
         [ctx, 'options', 'normal', 'Open Options'],
     ]
