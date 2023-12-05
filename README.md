@@ -1,6 +1,6 @@
-[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/foalfafgmnglcgpgkhhmcfhjgmdcjide?logo=google&logoColor=white&label=google%20users)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/foalfafgmnglcgpgkhhmcfhjgmdcjide?logo=google&logoColor=white&label=google%20users)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/smwc-web-extension?logo=mozilla&label=mozilla%20users)](https://addons.mozilla.org/addon/smwc-web-extension)
-[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/foalfafgmnglcgpgkhhmcfhjgmdcjide?label=chrome&logo=googlechrome)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/foalfafgmnglcgpgkhhmcfhjgmdcjide?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/smwc-web-extension?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/smwc-web-extension)
 [![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/smwc-web-extension?logo=github)](https://github.com/cssnr/smwc-web-extension/releases/latest)
 [![Manifest Version](https://img.shields.io/github/manifest-json/v/cssnr/smwc-web-extension?filename=manifest.json&logo=json&label=manifest)](https://github.com/cssnr/smwc-web-extension/blob/master/manifest.json)
@@ -9,7 +9,7 @@
 [![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/ZrRbfdE6kz)
 # SMWC Web Extension
 
-Modern Chrome and Firefox Addon to easily Patch and Play ROMs Online via [smwc.world](https://smwc.world).
+Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play ROMs Online via the [smwc.world](https://smwc.world) site.
 
 *   [Install](#install)
 *   [Features](#features)
@@ -19,19 +19,19 @@ Modern Chrome and Firefox Addon to easily Patch and Play ROMs Online via [smwc.w
 
 # Install
 
-*   [Google Chrome Web Store](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+*   [Google Chrome Web Store](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 *   [Mozilla Firefox Add-ons](https://addons.mozilla.org/addon/smwc-web-extension)
 
-[![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome_48x48.png)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome_48x48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 [![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/main/src/firefox/firefox_48x48.png)](https://addons.mozilla.org/addon/smwc-web-extension)
-[![Edge](https://raw.githubusercontent.com/alrra/browser-logos/main/src/edge/edge_48x48.png)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
-[![Chromium](https://raw.githubusercontent.com/alrra/browser-logos/main/src/chromium/chromium_48x48.png)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
-[![Brave](https://raw.githubusercontent.com/alrra/browser-logos/main/src/brave/brave_48x48.png)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
-[![Vivaldi](https://raw.githubusercontent.com/alrra/browser-logos/main/src/vivaldi/vivaldi_48x48.png)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
-[![Opera](https://raw.githubusercontent.com/alrra/browser-logos/main/src/opera/opera_48x48.png)](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Edge](https://raw.githubusercontent.com/alrra/browser-logos/main/src/edge/edge_48x48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Chromium](https://raw.githubusercontent.com/alrra/browser-logos/main/src/chromium/chromium_48x48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Brave](https://raw.githubusercontent.com/alrra/browser-logos/main/src/brave/brave_48x48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Vivaldi](https://raw.githubusercontent.com/alrra/browser-logos/main/src/vivaldi/vivaldi_48x48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Opera](https://raw.githubusercontent.com/alrra/browser-logos/main/src/opera/opera_48x48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 
 All **Chromium** Based Browsers can install the extension from the
-[Chrome Web Store](https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide).
+[Chrome Web Store](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide).
 
 # Features
 
@@ -90,7 +90,7 @@ For more information on building, see the scripts in the [package.json](package.
 
 ## Chrome Setup
 
-To install for production: https://chrome.google.com/webstore/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide
+To install for production: https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide
 
 1.  Build or Download a [Release](https://github.com/cssnr/smwc-web-extension/releases).
 1.  Unzip the archive, place the folder where it must remain and note its location for later.
@@ -111,7 +111,8 @@ it is very useful to keep addon storage after uninstall/restart with `keepStorag
 1.  Navigate to the folder you extracted earlier, select `manifest.json` then click `Select File`.
 1.  Open `about:config` search for `extensions.webextensions.keepStorageOnUninstall` and set to `true`.
 
-If you need to test a restart, you must pack the addon. This only works in ESR, Development, or Nightly.
+If you need to test a build or browser restart, you must pack the addon.
+This only works in ESR, Development, or Nightly.
 
 1.  Run `npm run build:firefox` then use `web-ext-artifacts/{name}-firefox-{version}.zip`.
 1.  Open `about:config` search for `xpinstall.signatures.required` and set to `false`.
