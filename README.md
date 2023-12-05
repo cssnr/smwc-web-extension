@@ -9,7 +9,7 @@
 [![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/ZrRbfdE6kz)
 # SMWC Web Extension
 
-Modern Chrome and Firefox Addon to easily Patch and Play ROMs Online via [smwc.world](https://smwc.world).
+Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play ROMs Online via the [smwc.world](https://smwc.world) site.
 
 *   [Install](#install)
 *   [Features](#features)
