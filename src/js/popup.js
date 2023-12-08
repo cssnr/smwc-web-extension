@@ -4,14 +4,15 @@ import { patchRom, saveOptions, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 
-const popupLinks = document.querySelectorAll('[data-href]')
-popupLinks.forEach((el) => el.addEventListener('click', popLinks))
-
-const formInputs = document.querySelectorAll('.options')
-formInputs.forEach((el) => el.addEventListener('change', saveOptions))
-
-const searchTypes = document.getElementsByName('searchType')
-searchTypes.forEach((el) => el.addEventListener('change', updateSearchType))
+document
+    .querySelectorAll('[data-href]')
+    .forEach((el) => el.addEventListener('click', popupLinks))
+document
+    .querySelectorAll('#options-form input')
+    .forEach((el) => el.addEventListener('change', saveOptions))
+document
+    .getElementsByName('searchType')
+    .forEach((el) => el.addEventListener('change', updateSearchType))
 
 document.getElementById('patch-form').addEventListener('submit', patchForm)
 
@@ -36,11 +37,11 @@ async function initPopup() {
 /**
  * Popup Links Click Callback
  * Firefox requires a call to window.close()
- * @function popLinks
+ * @function popupLinks
  * @param {MouseEvent} event
  */
-async function popLinks(event) {
-    console.log('popLinks:', event)
+async function popupLinks(event) {
+    console.log('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
     let url
