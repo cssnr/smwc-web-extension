@@ -42,6 +42,7 @@ export function updateOptions(options) {
 
 /**
  * Patch ROM and open URL at key
+ * TODO: Make Source ROM an Option
  * @param {String} url
  * @param {String} key
  * @param {Function} callback

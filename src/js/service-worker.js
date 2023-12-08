@@ -104,20 +104,17 @@ function notificationsClicked(notificationId) {
  * @param {String} namespace
  */
 function onChanged(changes, namespace) {
-    console.log('onChanged:', changes, namespace)
-    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (
-            key === 'options' &&
-            oldValue &&
-            newValue &&
-            oldValue.contextMenu !== newValue.contextMenu
-        ) {
-            if (newValue?.contextMenu) {
-                console.log('Enabled contextMenu...')
-                createContextMenus()
-            } else {
-                console.log('Disabled contextMenu...')
-                chrome.contextMenus.removeAll()
+    // console.log('onChanged:', changes, namespace)
+    for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
+        if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
+            if (oldValue.contextMenu !== newValue.contextMenu) {
+                if (newValue?.contextMenu) {
+                    console.log('Enabled contextMenu...')
+                    createContextMenus()
+                } else {
+                    console.log('Disabled contextMenu...')
+                    chrome.contextMenus.removeAll()
+                }
             }
         }
     }
