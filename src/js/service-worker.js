@@ -3,15 +3,11 @@
 import { patchRom } from './exports.js'
 
 chrome.runtime.onInstalled.addListener(onInstalled)
-chrome.contextMenus.onClicked.addListener(onClicked)
-chrome.commands.onCommand.addListener(onCommand)
-chrome.runtime.onMessage.addListener(onMessage)
+chrome.contextMenus.onClicked.addListener(contextMenusClicked)
+chrome.notifications.onClicked.addListener(notificationsClicked)
+// chrome.commands.onCommand.addListener(onCommand)
+// chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
-
-chrome.notifications.onClicked.addListener((notificationId) => {
-    console.log(`notifications.onClicked: ${notificationId}`)
-    chrome.notifications.clear(notificationId)
-})
 
 /**
  * On Install Callback
@@ -20,36 +16,40 @@ chrome.notifications.onClicked.addListener((notificationId) => {
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
-    const ghUrl = 'https://github.com/cssnr/smwc-web-extension'
-    const defaultOptions = {
-        contextMenu: true,
-        showUpdate: false,
-    }
-    const options = await setDefaultOptions(defaultOptions)
+    const githubURL = 'https://github.com/cssnr/smwc-web-extension'
+    const options = await Promise.resolve(
+        setDefaultOptions({
+            contextMenu: true,
+            showUpdate: false,
+        })
+    )
+    console.log('options:', options)
     if (options.contextMenu) {
         createContextMenus()
     }
-    if (details.reason === 'install') {
+    if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
         chrome.runtime.openOptionsPage()
-    } else if (options.showUpdate && details.reason === 'update') {
-        const manifest = chrome.runtime.getManifest()
-        if (manifest.version !== details.previousVersion) {
-            const url = `${ghUrl}/releases/tag/${manifest.version}`
-            console.log(`url: ${url}`)
-            await chrome.tabs.create({ active: true, url })
+    } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
+        if (options.showUpdate) {
+            const manifest = chrome.runtime.getManifest()
+            if (manifest.version !== details.previousVersion) {
+                const url = `${githubURL}/releases/tag/${manifest.version}`
+                console.log(`url: ${url}`)
+                await chrome.tabs.create({ active: true, url })
+            }
         }
     }
-    chrome.runtime.setUninstallURL(`${ghUrl}/issues`)
+    await chrome.runtime.setUninstallURL(`${githubURL}/issues`)
 }
 
 /**
  * On Clicked Callback
- * @function onClicked
+ * @function contextMenusClicked
  * @param {OnClickData} ctx
  * @param {chrome.tabs.Tab} tab
  */
-async function onClicked(ctx, tab) {
-    console.log('onClicked:', ctx, tab)
+async function contextMenusClicked(ctx, tab) {
+    console.log('contextMenusClicked:', ctx, tab)
     const callback = (result, key) => {
         console.log('service-worker callback:', result)
         if (result[key]) {
@@ -73,24 +73,29 @@ async function onClicked(ctx, tab) {
     }
 }
 
-/**
- * On Command Callback
- * @function onCommand
- * @param {String} command
- */
-async function onCommand(command) {
-    console.log(`onCommand: ${command}`)
+function notificationsClicked(notificationId) {
+    console.log(`notifications.onClicked: ${notificationId}`)
+    chrome.notifications.clear(notificationId)
 }
 
-/**
- * On Message Callback
- * @function onMessage
- * @param {Object} message
- * @param {MessageSender} sender
- */
-async function onMessage(message, sender) {
-    console.log('onMessage:', message, sender)
-}
+// /**
+//  * On Command Callback
+//  * @function onCommand
+//  * @param {String} command
+//  */
+// async function onCommand(command) {
+//     console.log(`onCommand: ${command}`)
+// }
+//
+// /**
+//  * On Message Callback
+//  * @function onMessage
+//  * @param {Object} message
+//  * @param {MessageSender} sender
+//  */
+// async function onMessage(message, sender) {
+//     console.log('onMessage:', message, sender)
+// }
 
 /**
  * On Changed Callback
@@ -99,20 +104,17 @@ async function onMessage(message, sender) {
  * @param {String} namespace
  */
 function onChanged(changes, namespace) {
-    console.log('onChanged:', changes, namespace)
-    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (
-            key === 'options' &&
-            oldValue &&
-            newValue &&
-            oldValue.contextMenu !== newValue.contextMenu
-        ) {
-            if (newValue?.contextMenu) {
-                console.log('Enabled contextMenu...')
-                createContextMenus()
-            } else {
-                console.log('Disabled contextMenu...')
-                chrome.contextMenus.removeAll()
+    // console.log('onChanged:', changes, namespace)
+    for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
+        if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
+            if (oldValue.contextMenu !== newValue.contextMenu) {
+                if (newValue?.contextMenu) {
+                    console.log('Enabled contextMenu...')
+                    createContextMenus()
+                } else {
+                    console.log('Disabled contextMenu...')
+                    chrome.contextMenus.removeAll()
+                }
             }
         }
     }

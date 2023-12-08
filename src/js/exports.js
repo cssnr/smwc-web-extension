@@ -7,29 +7,42 @@
  */
 export async function saveOptions(event) {
     console.log('saveOptions:', event)
-    let { options } = await chrome.storage.sync.get(['options'])
-    options[event.target.id] = event.target.checked
-    console.log(`Set: options[${event.target.id}]: ${options[event.target.id]}`)
-    await chrome.storage.sync.set({ options })
+    const { options } = await chrome.storage.sync.get(['options'])
+    let value
+    if (event.target.type === 'checkbox') {
+        value = event.target.checked
+    } else if (event.target.type === 'text') {
+        value = event.target.value
+    }
+    if (value !== undefined) {
+        options[event.target.id] = value
+        console.log(`Set: ${event.target.id}:`, value)
+        await chrome.storage.sync.set({ options })
+    }
 }
 
 /**
- * Update Options
+ * Update Options based on typeof
  * @function initOptions
  * @param {Object} options
  */
 export function updateOptions(options) {
     for (const [key, value] of Object.entries(options)) {
         // console.log(`${key}: ${value}`)
-        const element = document.getElementById(key)
-        if (element) {
-            element.checked = value
+        const el = document.getElementById(key)
+        if (el) {
+            if (typeof value === 'boolean') {
+                el.checked = value
+            } else if (typeof value === 'string') {
+                el.value = value
+            }
         }
     }
 }
 
 /**
  * Patch ROM and open URL at key
+ * TODO: Make Source ROM an Option
  * @param {String} url
  * @param {String} key
  * @param {Function} callback
