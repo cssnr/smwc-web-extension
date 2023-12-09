@@ -70,7 +70,7 @@ async function popupLinks(event) {
  */
 async function updateSearchType(event) {
     console.log('updateSearchType:', event)
-    let { popup } = await chrome.storage.sync.get(['popup'])
+    const { popup } = await chrome.storage.sync.get(['popup'])
     popup.searchType = event.target.id
     await chrome.storage.sync.set({ popup })
     const value = document.getElementById('patch-input').value
