@@ -1,6 +1,33 @@
 // JS Exports
 
 /**
+ * Patch ROM and open URL at key
+ * TODO: Make Source ROM an Option
+ * @param {String} url
+ * @param {String} key
+ * @param {Function} callback
+ */
+export function patchRom(url, key, callback) {
+    const smwcWorld = 'https://smwc.world/patcher/'
+    const sourceRom =
+        'https://github.com/videofindersTV/super-mario-world/raw/master/Super.Mario.World.1.smc'
+    const formdata = new FormData()
+    formdata.append('patch_url', url)
+    formdata.append('source_url', sourceRom)
+
+    const requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+    }
+
+    fetch(smwcWorld, requestOptions)
+        .then((response) => response.json())
+        .then((result) => callback(result, key))
+        .catch((error) => console.warn('error', error))
+}
+
+/**
  * Save Options Callback
  * @function saveOptions
  * @param {InputEvent} event
@@ -38,31 +65,4 @@ export function updateOptions(options) {
             }
         }
     }
-}
-
-/**
- * Patch ROM and open URL at key
- * TODO: Make Source ROM an Option
- * @param {String} url
- * @param {String} key
- * @param {Function} callback
- */
-export function patchRom(url, key, callback) {
-    const smwcWorld = 'https://smwc.world/patcher/'
-    const sourceRom =
-        'https://github.com/videofindersTV/super-mario-world/raw/master/Super.Mario.World.1.smc'
-    const formdata = new FormData()
-    formdata.append('patch_url', url)
-    formdata.append('source_url', sourceRom)
-
-    const requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow',
-    }
-
-    fetch(smwcWorld, requestOptions)
-        .then((response) => response.json())
-        .then((result) => callback(result, key))
-        .catch((error) => console.warn('error', error))
 }
