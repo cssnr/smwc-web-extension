@@ -112,7 +112,7 @@ function showAlert(message) {
     console.log('showAlert:', message)
     const alert = document.getElementById('popup-alert')
     alert.textContent = message
-    alert.classList.remove('visually-hidden')
+    alert.classList.remove('d-none')
     $('#popup-alert')
         .fadeTo(5000, 500)
         .slideUp(500, function () {

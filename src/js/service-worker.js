@@ -126,6 +126,7 @@ function onChanged(changes, namespace) {
  */
 function createContextMenus() {
     console.log('createContextMenus')
+    chrome.contextMenus.removeAll()
     const ctx = ['link']
     const contexts = [
         [ctx, 'rom_patch', 'normal', 'Patch ROM'],
