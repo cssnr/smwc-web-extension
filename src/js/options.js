@@ -9,6 +9,9 @@ chrome.storage.onChanged.addListener(onChanged)
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
 
 // document.getElementById('advanced').addEventListener('submit', saveAdvanced)
 

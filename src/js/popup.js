@@ -13,6 +13,9 @@ document
 document
     .getElementsByName('searchType')
     .forEach((el) => el.addEventListener('change', updateSearchType))
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
 
 document.getElementById('patch-form').addEventListener('submit', patchForm)
 
