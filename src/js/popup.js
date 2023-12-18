@@ -51,17 +51,11 @@ async function popupLinks(event) {
     event.preventDefault()
     const anchor = event.target.closest('a')
     console.log(`anchor.href: ${anchor.href}`)
-    let url
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
-        return window.close()
-    } else if (anchor.href.startsWith('http')) {
-        url = anchor.href
     } else {
-        url = chrome.runtime.getURL(anchor.href)
+        await chrome.tabs.create({ active: true, url: anchor.href })
     }
-    console.log('url:', url)
-    await chrome.tabs.create({ active: true, url })
     return window.close()
 }
 
