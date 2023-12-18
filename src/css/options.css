@@ -3,9 +3,3 @@
 .card {
     min-width: 380px;
 }
-
-svg {
-    height: 1em;
-    width: 1em;
-    margin-bottom: 0.15em;
-}
