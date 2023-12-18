@@ -19,6 +19,8 @@ document
 
 document.getElementById('patch-form').addEventListener('submit', patchForm)
 
+const patchRomBtn = document.getElementById('patch-rom')
+
 /**
  * Initialize Popup
  * @function initPopup
@@ -51,17 +53,11 @@ async function popupLinks(event) {
     event.preventDefault()
     const anchor = event.target.closest('a')
     console.log(`anchor.href: ${anchor.href}`)
-    let url
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
-        return window.close()
-    } else if (anchor.href.startsWith('http')) {
-        url = anchor.href
     } else {
-        url = chrome.runtime.getURL(anchor.href)
+        await chrome.tabs.create({ active: true, url: anchor.href })
     }
-    console.log('url:', url)
-    await chrome.tabs.create({ active: true, url })
     return window.close()
 }
 
@@ -90,12 +86,17 @@ async function updateSearchType(event) {
 async function patchForm(event) {
     console.log('linksForm:', event)
     event.preventDefault()
+    if (patchRomBtn.classList.contains('disabled')) {
+        return console.log('Duplicate Click Detected!')
+    }
+    patchRomBtn.classList.add('disabled')
     const value = document.getElementById('patch-input').value
     console.log('value:', value)
     const key = document.querySelector('input[name="searchType"]:checked').value
     console.log('key:', key)
     const callback = (result, key) => {
         console.log('popup callback:', result)
+        patchRomBtn.classList.remove('disabled')
         if (result[key]) {
             chrome.tabs.create({ active: true, url: result[key] }).then()
             window.close()
