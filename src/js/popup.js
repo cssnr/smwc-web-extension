@@ -5,7 +5,7 @@ import { patchRom, saveOptions, updateOptions } from './exports.js'
 document.addEventListener('DOMContentLoaded', initPopup)
 
 document
-    .querySelectorAll('[data-href]')
+    .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
 document
     .querySelectorAll('#options-form input')
@@ -26,8 +26,12 @@ document.getElementById('patch-form').addEventListener('submit', patchForm)
 async function initPopup() {
     console.log('initPopup')
     document.getElementById('patch-input').focus()
+
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
+    document.getElementById('homepage_url').href =
+        chrome.runtime.getManifest().homepage_url
+
     const { options, popup } = await chrome.storage.sync.get([
         'options',
         'popup',
@@ -47,21 +51,17 @@ async function popupLinks(event) {
     console.log('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
+    console.log(`anchor.href: ${anchor.href}`)
     let url
-    if (anchor?.dataset?.href.startsWith('http')) {
-        url = anchor.dataset.href
-    } else if (anchor?.dataset?.href === 'homepage') {
-        url = chrome.runtime.getManifest().homepage_url
-    } else if (anchor?.dataset?.href === 'options') {
+    if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor?.dataset?.href) {
-        url = chrome.runtime.getURL(anchor.dataset.href)
+    } else if (anchor.href.startsWith('http')) {
+        url = anchor.href
+    } else {
+        url = chrome.runtime.getURL(anchor.href)
     }
     console.log('url:', url)
-    if (!url) {
-        return console.error('No dataset.href for anchor:', anchor)
-    }
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }
