@@ -5,8 +5,6 @@ import { patchRom } from './exports.js'
 chrome.runtime.onInstalled.addListener(onInstalled)
 chrome.contextMenus.onClicked.addListener(contextMenusClicked)
 chrome.notifications.onClicked.addListener(notificationsClicked)
-// chrome.commands.onCommand.addListener(onCommand)
-// chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
 
 /**
@@ -78,25 +76,6 @@ function notificationsClicked(notificationId) {
     chrome.notifications.clear(notificationId)
 }
 
-// /**
-//  * On Command Callback
-//  * @function onCommand
-//  * @param {String} command
-//  */
-// async function onCommand(command) {
-//     console.log(`onCommand: ${command}`)
-// }
-//
-// /**
-//  * On Message Callback
-//  * @function onMessage
-//  * @param {Object} message
-//  * @param {MessageSender} sender
-//  */
-// async function onMessage(message, sender) {
-//     console.log('onMessage:', message, sender)
-// }
-
 /**
  * On Changed Callback
  * @function onChanged
@@ -125,7 +104,7 @@ function onChanged(changes, namespace) {
  * @function createContextMenus
  */
 function createContextMenus() {
-    console.log('createContextMenus')
+    console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
     const ctx = ['link']
     const contexts = [

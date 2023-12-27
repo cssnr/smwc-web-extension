@@ -2,10 +2,8 @@
 
 import { saveOptions, updateOptions } from './exports.js'
 
-document.addEventListener('DOMContentLoaded', initOptions)
-
 chrome.storage.onChanged.addListener(onChanged)
-
+document.addEventListener('DOMContentLoaded', initOptions)
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -13,14 +11,12 @@ document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
 
-// document.getElementById('advanced').addEventListener('submit', saveAdvanced)
-
 /**
  * Initialize Options
  * @function initOptions
  */
 async function initOptions() {
-    console.log('initOptions')
+    console.debug('initOptions')
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
 
@@ -29,7 +25,7 @@ async function initOptions() {
         commands.find((x) => x.name === '_execute_action').shortcut || 'Not Set'
 
     const { options } = await chrome.storage.sync.get(['options'])
-    console.log('options:', options)
+    console.debug('options:', options)
     updateOptions(options)
 }
 
@@ -40,27 +36,11 @@ async function initOptions() {
  * @param {String} namespace
  */
 function onChanged(changes, namespace) {
-    console.log('onChanged:', changes, namespace)
+    console.debug('onChanged:', changes, namespace)
     for (let [key, { newValue }] of Object.entries(changes)) {
         if (key === 'options') {
-            console.log(newValue)
+            console.debug(newValue)
             updateOptions(newValue)
         }
     }
 }
-
-// /**
-//  * Save Options Click
-//  * @function saveAdvanced
-//  * @param {SubmitEvent} event
-//  */
-// async function saveAdvanced(event) {
-//     console.log('saveOptions:', event)
-//     event.preventDefault()
-//     // const { url } = await chrome.storage.local.get(['url'])
-//     const input = document.getElementById('url')
-//     const url = input.value.replace(/\/$/, '')
-//     input.value = url
-//     console.log(`url: ${url}`)
-//     await chrome.storage.local.set({ url })
-// }

@@ -72,9 +72,21 @@
     <div class="justify-content-center align-items-center d-flex text-center small">
         <img src="../images/logo16.png" class="me-1" alt="SMWC Web Extension" title="SMWC Web Extension">
         <a class="link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-2" type="button" rel="noopener"
-           id="homepage_url" href="">SMWC Web Extension</a> v<span id="version"></span>
+           href="homepage_url">SMWC Web Extension</a> v<span id="version"></span>
     </div>
 </div>
+
+<div aria-live="polite" aria-atomic="true" class="">
+    <div id="toast-container" class="toast-container bottom-0 end-0 p-3"></div>
+</div>
+
+<div class="d-none">
+    <div class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="d-flex">
+            <div class="toast-body text-break small"></div>
+        </div>
+    </div>
+</div> <!-- d-none -->
 
 <script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>

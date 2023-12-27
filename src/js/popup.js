@@ -1,9 +1,9 @@
 // JS for popup.html
 
-import { patchRom, saveOptions, updateOptions } from './exports.js'
+import { patchRom, saveOptions, showToast, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
-
+document.getElementById('patch-form').addEventListener('submit', patchForm)
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
@@ -17,27 +17,23 @@ document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
 
-document.getElementById('patch-form').addEventListener('submit', patchForm)
-
-const patchRomBtn = document.getElementById('patch-rom')
-
 /**
  * Initialize Popup
  * @function initPopup
  */
 async function initPopup() {
-    console.log('initPopup')
+    console.debug('initPopup')
     document.getElementById('patch-input').focus()
 
     const manifest = chrome.runtime.getManifest()
     document.getElementById('version').textContent = manifest.version
-    document.getElementById('homepage_url').href = manifest.homepage_url
+    document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
 
     const { options, popup } = await chrome.storage.sync.get([
         'options',
         'popup',
     ])
-    console.log('options, popup:', options, popup)
+    console.debug('options, popup:', options, popup)
     document.getElementById(popup.searchType).checked = true
     updateOptions(options)
 }
@@ -49,10 +45,10 @@ async function initPopup() {
  * @param {MouseEvent} event
  */
 async function popupLinks(event) {
-    console.log('popupLinks:', event)
+    console.debug('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
-    console.log(`anchor.href: ${anchor.href}`)
+    console.info(`anchor.href: ${anchor.href}`)
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
     } else {
@@ -67,12 +63,12 @@ async function popupLinks(event) {
  * @param {SubmitEvent} event
  */
 async function updateSearchType(event) {
-    console.log('updateSearchType:', event)
+    console.debug('updateSearchType:', event)
     const { popup } = await chrome.storage.sync.get(['popup'])
     popup.searchType = event.target.id
     await chrome.storage.sync.set({ popup })
     const value = document.getElementById('patch-input').value
-    console.log('value:', value)
+    console.info('value:', value)
     if (value) {
         await patchForm(event)
     }
@@ -84,41 +80,34 @@ async function updateSearchType(event) {
  * @param {SubmitEvent} event
  */
 async function patchForm(event) {
-    console.log('linksForm:', event)
+    console.debug('linksForm:', event)
     event.preventDefault()
+    const patchRomBtn = document.getElementById('patch-rom')
     if (patchRomBtn.classList.contains('disabled')) {
-        return console.log('Duplicate Click Detected!')
+        return console.info('Duplicate Click Detected!')
     }
     patchRomBtn.classList.add('disabled')
     const value = document.getElementById('patch-input').value
-    console.log('value:', value)
+    console.info('value:', value)
     const key = document.querySelector('input[name="searchType"]:checked').value
-    console.log('key:', key)
+    console.debug('key:', key)
     const callback = (result, key) => {
-        console.log('popup callback:', result)
+        console.debug('popup callback:', result)
         patchRomBtn.classList.remove('disabled')
         if (result[key]) {
-            chrome.tabs.create({ active: true, url: result[key] }).then()
+            if (key === 'download') {
+                chrome.downloads.download({ url: result[key] })
+            } else {
+                chrome.tabs.create({ active: true, url: result[key] }).then()
+            }
             window.close()
         } else if (result.error?.__all__) {
             console.warn(result.error.__all__[0])
-            showAlert(result.error.__all__[0])
+            showToast(`Error: ${result.error.__all__[0]}`, 'danger')
         } else {
             console.warn('Unknown Result:', result)
-            showAlert('Unknown Error. Check Logs...')
+            showToast('Error Patching! Inspect Popup for Details.', 'danger')
         }
     }
     patchRom(value, key, callback)
-}
-
-function showAlert(message) {
-    console.log('showAlert:', message)
-    const alert = document.getElementById('popup-alert')
-    alert.textContent = message
-    alert.classList.remove('d-none')
-    $('#popup-alert')
-        .fadeTo(5000, 500)
-        .slideUp(500, function () {
-            $('#popup-alert').slideUp(500)
-        })
 }
