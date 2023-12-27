@@ -3,7 +3,7 @@
   "description": "SMWC.world Web Extension and Browser Addon to Easily Patch and Play SMW ROMs.",
   "homepage_url": "https://smwc.world",
   "author": "Shane",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "manifest_version": 3,
   "commands": {
     "_execute_action": {
@@ -13,7 +13,7 @@
       "description": "Show Main Popup Action"
     }
   },
-  "permissions": ["contextMenus", "notifications", "storage"],
+  "permissions": ["contextMenus", "downloads", "notifications", "storage"],
   "background": {
     "type": "module"
   },
