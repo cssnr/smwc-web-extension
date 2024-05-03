@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SMWC Web Extension</title>
     <link rel="icon" href="../images/logo16.png" sizes="any">
     <link rel="stylesheet" type="text/css" href="../dist/bootstrap/bootstrap.min.css">
@@ -12,7 +14,7 @@
 <body>
 
 <div class="container-fluid p-3">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
         <div class="btn-group " role="group" aria-label="SMWC.world">
             <a role="button" class="btn btn-outline-success" href="https://smwc.world/patcher/">
                 <i class="fa-solid fa-hard-drive me-1"></i> Patcher</a>
@@ -21,31 +23,33 @@
         </div>
         <a class="btn btn-success btn-sm w-100" role="button" href="https://www.smwcentral.net/?p=section&s=smwhacks">
             SMW Central Rom Hacks</a>
-        <form id="patch-form">
-            <label for="patch-input" class="visually-hidden">Patch URL</label>
+    </div>
+
+    <form id="patch-form">
+        <div class="row mb-2">
+            <label for="patch-input" class="visually-hidden"></label>
             <div class="input-group">
-                <input id="patch-input" type="text" class="form-control form-control-sm" placeholder="Quick Patch/Play URL"
-                       aria-label="Patch URL" aria-describedby="patch-rom" required>
-                <button class="btn btn-outline-secondary" type="submit" id="patch-rom">Go</button>
+                <input id="patch-input" type="text" class="form-control form-control-sm" placeholder="Patch or Play"
+                       aria-label="Registration or Operator" aria-describedby="submit-search" required>
+                <button class="btn btn-outline-secondary" type="submit" id="submit-form">Go</button>
             </div>
-        </form>
-        <div class="row text-center">
-            <div class="col-6">
+        </div>
+        <div class="row mb-2">
+            <div class="col text-center">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="searchType" id="doPatch" value="download">
-                    <label class="form-check-label small" for="doPatch">Patch</label>
+                    <input class="form-check-input" type="radio" name="patchType" id="doPatch" value="download">
+                    <label class="form-check-label small" for="doPatch">Download</label>
                 </div>
-            </div>
-            <div class="col-6">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="searchType" id="doPlay" value="play">
+                    <input class="form-check-input" type="radio" name="patchType" id="doPlay" value="play">
                     <label class="form-check-label small" for="doPlay">Play</label>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="popup-alert" class="alert alert-warning mt-2 d-none" role="alert"></div>
+    </form>
+
     <hr class="my-2">
+
     <form id="options-form" class="mb-2">
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="contextMenu">
