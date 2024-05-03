@@ -3,7 +3,6 @@
 import { patchRom, saveOptions, showToast, updateOptions } from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
-document.getElementById('patch-form').addEventListener('submit', patchForm)
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
@@ -11,11 +10,16 @@ document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 document
-    .getElementsByName('searchType')
-    .forEach((el) => el.addEventListener('change', updateSearchType))
-document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
+document
+    .getElementsByName('patchType')
+    .forEach((el) => el.addEventListener('change', updatePatchType))
+
+const patchInput = document.getElementById('patch-input')
+const patchForm = document.getElementById('patch-form')
+
+patchForm.addEventListener('submit', patchFormSubmit)
 
 /**
  * Initialize Popup
@@ -23,19 +27,18 @@ document
  */
 async function initPopup() {
     console.debug('initPopup')
-    document.getElementById('patch-input').focus()
-
     const manifest = chrome.runtime.getManifest()
-    document.getElementById('version').textContent = manifest.version
+    document.querySelector('.version').textContent = manifest.version
     document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
 
-    const { options, popup } = await chrome.storage.sync.get([
-        'options',
-        'popup',
-    ])
-    console.debug('options, popup:', options, popup)
-    document.getElementById(popup.searchType).checked = true
+    const { options } = await chrome.storage.sync.get(['options'])
+    console.debug('options:', options)
     updateOptions(options)
+    document.querySelector(
+        `input[name="patchType"][value="${options.patchType}"]`
+    ).checked = true
+    patchInput.placeholder = options.patchType
+    patchInput.focus()
 }
 
 /**
@@ -48,52 +51,66 @@ async function popupLinks(event) {
     console.debug('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
-    console.info(`anchor.href: ${anchor.href}`)
+    console.debug(`anchor.href: ${anchor.href}`, anchor)
+    let url
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
+        return window.close()
+    } else if (
+        anchor.href.startsWith('http') ||
+        anchor.href.startsWith('chrome-extension')
+    ) {
+        // console.debug(`http or chrome-extension`)
+        url = anchor.href
     } else {
-        await chrome.tabs.create({ active: true, url: anchor.href })
+        // console.debug(`else chrome.runtime.getURL`)
+        url = chrome.runtime.getURL(anchor.href)
     }
+    console.log('url:', url)
+    await chrome.tabs.create({ active: true, url })
     return window.close()
 }
 
 /**
  * Save Default Radio on Change Callback
- * @function updateSearchType
+ * @function updatePatchType
  * @param {SubmitEvent} event
  */
-async function updateSearchType(event) {
-    console.debug('updateSearchType:', event)
-    const { popup } = await chrome.storage.sync.get(['popup'])
-    popup.searchType = event.target.id
-    await chrome.storage.sync.set({ popup })
-    const value = document.getElementById('patch-input').value
-    console.info('value:', value)
-    if (value) {
-        await patchForm(event)
-    }
+async function updatePatchType(event) {
+    console.debug('updatePatchType', event)
+    let { options } = await chrome.storage.sync.get(['options'])
+    options.patchType = event.target.value
+    console.debug(`options.patchType: ${event.target.value}`)
+    await chrome.storage.sync.set({ options })
+    patchInput.placeholder = options.patchType
+    await patchFormSubmit(event)
 }
 
 /**
- * Links Form Callback
- * @function patchForm
+ * Patch Form Callback
+ * @function patchFormSubmit
  * @param {SubmitEvent} event
  */
-async function patchForm(event) {
-    console.debug('linksForm:', event)
+async function patchFormSubmit(event) {
+    console.debug('patchFormSubmit:', event)
     event.preventDefault()
-    const patchRomBtn = document.getElementById('patch-rom')
-    if (patchRomBtn.classList.contains('disabled')) {
+    const submitFormBtn = document.getElementById('submit-form')
+    if (submitFormBtn.classList.contains('disabled')) {
         return console.info('Duplicate Click Detected!')
     }
-    patchRomBtn.classList.add('disabled')
-    const value = document.getElementById('patch-input').value
-    console.info('value:', value)
-    const key = document.querySelector('input[name="searchType"]:checked').value
+    const value = patchInput.value
+    console.debug('value:', value)
+    if (!value) {
+        console.log('No value for patchInput')
+        patchInput.focus()
+        return
+    }
+    submitFormBtn.classList.add('disabled')
+    const key = document.querySelector('input[name="patchType"]:checked').value
     console.debug('key:', key)
     const callback = (result, key) => {
         console.debug('popup callback:', result)
-        patchRomBtn.classList.remove('disabled')
+        submitFormBtn.classList.remove('disabled')
         if (result[key]) {
             if (key === 'download') {
                 chrome.downloads.download({ url: result[key] })

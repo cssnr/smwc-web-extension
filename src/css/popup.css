@@ -2,9 +2,10 @@
 
 body {
     width: 340px;
+    overflow-x: hidden;
 }
 
-input::placeholder,
-textarea::placeholder {
+input::placeholder {
     text-align: center;
+    text-transform: capitalize;
 }

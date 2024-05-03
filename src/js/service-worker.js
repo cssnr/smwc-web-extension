@@ -2,10 +2,27 @@
 
 import { patchRom } from './exports.js'
 
+chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
 chrome.contextMenus.onClicked.addListener(contextMenusClicked)
 chrome.notifications.onClicked.addListener(notificationsClicked)
 chrome.storage.onChanged.addListener(onChanged)
+
+/**
+ * On Startup Callback
+ * @function onStartup
+ */
+async function onStartup() {
+    console.log('onStartup')
+    if (typeof browser !== 'undefined') {
+        console.log('Firefox CTX Menu Workaround')
+        const { options } = await chrome.storage.sync.get(['options'])
+        console.debug('options:', options)
+        if (options.contextMenu) {
+            createContextMenus()
+        }
+    }
+}
 
 /**
  * On Install Callback
@@ -17,6 +34,7 @@ async function onInstalled(details) {
     const githubURL = 'https://github.com/cssnr/smwc-web-extension'
     const options = await Promise.resolve(
         setDefaultOptions({
+            patchType: 'download',
             contextMenu: true,
             showUpdate: false,
         })
@@ -148,8 +166,8 @@ async function setDefaultOptions(defaultOptions) {
         console.log(options)
     }
     // TODO: Handle popup default(s) differently?
-    if (popup?.searchType === undefined) {
-        popup = { searchType: 'doPatch' }
+    if (popup?.patchType === undefined) {
+        popup = { patchType: 'doPatch' }
         await chrome.storage.sync.set({ popup })
     }
     return options
