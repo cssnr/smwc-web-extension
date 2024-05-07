@@ -4,7 +4,7 @@ import { patchRom } from './exports.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
-chrome.contextMenus.onClicked.addListener(contextMenusClicked)
+chrome.contextMenus.onClicked.addListener(onClicked)
 chrome.notifications.onClicked.addListener(notificationsClicked)
 chrome.storage.onChanged.addListener(onChanged)
 
@@ -39,7 +39,7 @@ async function onInstalled(details) {
             showUpdate: false,
         })
     )
-    console.log('options:', options)
+    console.debug('options:', options)
     if (options.contextMenu) {
         createContextMenus()
     }
@@ -50,7 +50,6 @@ async function onInstalled(details) {
             const manifest = chrome.runtime.getManifest()
             if (manifest.version !== details.previousVersion) {
                 const url = `${githubURL}/releases/tag/${manifest.version}`
-                console.log(`url: ${url}`)
                 await chrome.tabs.create({ active: false, url })
             }
         }
@@ -60,16 +59,20 @@ async function onInstalled(details) {
 
 /**
  * On Clicked Callback
- * @function contextMenusClicked
+ * @function onClicked
  * @param {OnClickData} ctx
  * @param {chrome.tabs.Tab} tab
  */
-async function contextMenusClicked(ctx, tab) {
-    console.log('contextMenusClicked:', ctx, tab)
+async function onClicked(ctx, tab) {
+    console.debug('onClicked:', ctx, tab)
     const callback = (result, key) => {
         console.log('service-worker callback:', result)
         if (result[key]) {
-            chrome.tabs.create({ active: true, url: result[key] }).then()
+            if (key === 'download') {
+                chrome.downloads.download({ url: result[key] })
+            } else {
+                chrome.tabs.create({ active: true, url: result[key] }).then()
+            }
         } else if (result.error?.__all__) {
             console.warn(result.error.__all__[0])
             sendNotification('Error', result.error.__all__[0])
@@ -101,15 +104,15 @@ function notificationsClicked(notificationId) {
  * @param {String} namespace
  */
 function onChanged(changes, namespace) {
-    // console.log('onChanged:', changes, namespace)
+    // console.debug('onChanged:', changes, namespace)
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
         if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
             if (oldValue.contextMenu !== newValue.contextMenu) {
                 if (newValue?.contextMenu) {
-                    console.log('Enabled contextMenu...')
+                    console.info('Enabled contextMenu...')
                     createContextMenus()
                 } else {
-                    console.log('Disabled contextMenu...')
+                    console.info('Disabled contextMenu...')
                     chrome.contextMenus.removeAll()
                 }
             }
@@ -148,10 +151,9 @@ function createContextMenus() {
  * @return {Object}
  */
 async function setDefaultOptions(defaultOptions) {
-    console.log('setDefaultOptions')
-    let { options, popup } = await chrome.storage.sync.get(['options', 'popup'])
+    console.log('setDefaultOptions', defaultOptions)
+    let { options } = await chrome.storage.sync.get(['options'])
     options = options || {}
-    console.log(options)
     let changed = false
     for (const [key, value] of Object.entries(defaultOptions)) {
         // console.log(`${key}: default: ${value} current: ${options[key]}`)
@@ -163,12 +165,7 @@ async function setDefaultOptions(defaultOptions) {
     }
     if (changed) {
         await chrome.storage.sync.set({ options })
-        console.log(options)
-    }
-    // TODO: Handle popup default(s) differently?
-    if (popup?.patchType === undefined) {
-        popup = { patchType: 'doPatch' }
-        await chrome.storage.sync.set({ popup })
+        console.log('changed:', options)
     }
     return options
 }
