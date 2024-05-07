@@ -69,7 +69,11 @@ async function contextMenusClicked(ctx, tab) {
     const callback = (result, key) => {
         console.log('service-worker callback:', result)
         if (result[key]) {
-            chrome.tabs.create({ active: true, url: result[key] }).then()
+            if (key === 'download') {
+                chrome.downloads.download({ url: result[key] })
+            } else {
+                chrome.tabs.create({ active: true, url: result[key] }).then()
+            }
         } else if (result.error?.__all__) {
             console.warn(result.error.__all__[0])
             sendNotification('Error', result.error.__all__[0])

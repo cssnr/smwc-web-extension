@@ -51,22 +51,27 @@ async function popupLinks(event) {
     console.debug('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
-    console.debug(`anchor.href: ${anchor.href}`, anchor)
+    const href = anchor.getAttribute('href').replace(/^\.+/g, '')
+    console.debug('href:', href)
     let url
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (
-        anchor.href.startsWith('http') ||
-        anchor.href.startsWith('chrome-extension')
-    ) {
-        // console.debug(`http or chrome-extension`)
-        url = anchor.href
+    } else if (href.startsWith('http')) {
+        url = href
     } else {
-        // console.debug(`else chrome.runtime.getURL`)
-        url = chrome.runtime.getURL(anchor.href)
+        url = chrome.runtime.getURL(href)
     }
-    console.log('url:', url)
+    console.debug('url:', url)
+    // const tabs = await chrome.tabs.query({ currentWindow: true })
+    // console.log(tabs)
+    // for (const tab of tabs) {
+    //     if (tab.url === url) {
+    //         console.debug('tab:', tab)
+    //         await chrome.tabs.update(tab.id, { active: true })
+    //         return window.close()
+    //     }
+    // }
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }
