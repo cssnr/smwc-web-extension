@@ -1,6 +1,12 @@
 // JS for popup.html
 
-import { patchRom, saveOptions, showToast, updateOptions } from './exports.js'
+import {
+    patchRom,
+    saveOptions,
+    showToast,
+    updateManifest,
+    updateOptions,
+} from './exports.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 document
@@ -10,16 +16,16 @@ document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 document
-    .querySelectorAll('[data-bs-toggle="tooltip"]')
-    .forEach((el) => new bootstrap.Tooltip(el))
-document
     .getElementsByName('patchType')
     .forEach((el) => el.addEventListener('change', updatePatchType))
+document
+    .getElementById('patch-form')
+    .addEventListener('submit', patchFormSubmit)
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
 
 const patchInput = document.getElementById('patch-input')
-const patchForm = document.getElementById('patch-form')
-
-patchForm.addEventListener('submit', patchFormSubmit)
 
 /**
  * Initialize Popup
@@ -27,9 +33,8 @@ patchForm.addEventListener('submit', patchFormSubmit)
  */
 async function initPopup() {
     console.debug('initPopup')
-    const manifest = chrome.runtime.getManifest()
-    document.querySelector('.version').textContent = manifest.version
-    document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
+
+    updateManifest()
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
@@ -54,7 +59,7 @@ async function popupLinks(event) {
     const href = anchor.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
     let url
-    if (anchor.href.endsWith('html/options.html')) {
+    if (href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
     } else if (href.startsWith('http')) {
@@ -62,16 +67,7 @@ async function popupLinks(event) {
     } else {
         url = chrome.runtime.getURL(href)
     }
-    console.debug('url:', url)
-    // const tabs = await chrome.tabs.query({ currentWindow: true })
-    // console.log(tabs)
-    // for (const tab of tabs) {
-    //     if (tab.url === url) {
-    //         console.debug('tab:', tab)
-    //         await chrome.tabs.update(tab.id, { active: true })
-    //         return window.close()
-    //     }
-    // }
+    console.log('url:', url)
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }
