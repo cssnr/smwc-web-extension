@@ -50,7 +50,7 @@ export async function saveOptions(event) {
 }
 
 /**
- * Update Options based on typeof
+ * Update Options based on type
  * @function initOptions
  * @param {Object} options
  */
@@ -69,6 +69,20 @@ export function updateOptions(options) {
 }
 
 /**
+ * Update DOM with Manifest Details
+ * @function updateManifest
+ */
+export function updateManifest() {
+    const manifest = chrome.runtime.getManifest()
+    document
+        .querySelectorAll('.version')
+        .forEach((el) => (el.textContent = manifest.version))
+    document
+        .querySelectorAll('[href="homepage_url"]')
+        .forEach((el) => (el.href = manifest.homepage_url))
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message
@@ -76,7 +90,7 @@ export function updateOptions(options) {
  */
 export function showToast(message, type = 'success') {
     console.debug(`showToast: ${type}: ${message}`)
-    const clone = document.querySelector('.d-none .toast')
+    const clone = document.querySelector('.d-none > .toast')
     const container = document.getElementById('toast-container')
     if (!clone || !container) {
         return console.warn('Missing clone or container:', clone, container)
