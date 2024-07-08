@@ -1,10 +1,16 @@
 // JS for options.html
 
-import { saveOptions, updateManifest, updateOptions } from './exports.js'
+import {
+    saveOptions,
+    showToast,
+    updateManifest,
+    updateOptions,
+} from './exports.js'
 
 chrome.storage.onChanged.addListener(onChanged)
 
 document.addEventListener('DOMContentLoaded', initOptions)
+document.getElementById('copy-support').addEventListener('click', copySupport)
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -65,4 +71,23 @@ async function setShortcuts(selector = '#keyboard-shortcuts') {
         row.querySelector('kbd').textContent = command.shortcut || 'Not Set'
         tbody.appendChild(row)
     }
+}
+
+/**
+ * Copy Support/Debugging Information
+ * @function copySupport
+ * @param {MouseEvent} event
+ */
+async function copySupport(event) {
+    console.debug('copySupport:', event)
+    event.preventDefault()
+    const manifest = chrome.runtime.getManifest()
+    const { options } = await chrome.storage.sync.get(['options'])
+    const result = [
+        `${manifest.name} - ${manifest.version}`,
+        navigator.userAgent,
+        `options: ${JSON.stringify(options)}`,
+    ]
+    await navigator.clipboard.writeText(result.join('\n'))
+    showToast('Support Information Copied.')
 }
