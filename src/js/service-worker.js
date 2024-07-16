@@ -44,7 +44,10 @@ async function onInstalled(details) {
         createContextMenus()
     }
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        chrome.runtime.openOptionsPage()
+        // chrome.runtime.openOptionsPage()
+        let url = chrome.runtime.getURL('/html/options.html') + '?install=new'
+        console.log(`url: ${url}`)
+        await chrome.tabs.create({ active: true, url })
     } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
         if (options.showUpdate) {
             const manifest = chrome.runtime.getManifest()

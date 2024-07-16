@@ -1,5 +1,45 @@
 /* CSS for options.html */
 
-.card {
-    min-width: 380px;
+body {
+    min-width: 400px;
+}
+
+#pin-notice {
+    position: fixed;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+[data-bs-theme='dark'] #pin-notice {
+    text-shadow:
+        0 0 3px #000,
+        0 0 6px #000,
+        0 0 9px #000,
+        0 0 12px #000;
+}
+
+[data-bs-theme='light'] #pin-notice {
+    text-shadow:
+        0 0 3px #fff,
+        0 0 6px #fff,
+        0 0 9px #fff,
+        0 0 12px #fff;
+}
+
+.bounce {
+    animation: bounce 4s infinite;
+}
+
+@keyframes bounce {
+    0% {
+        top: 0;
+    }
+    50% {
+        top: 30px;
+    }
+    100% {
+        top: 0;
+    }
 }

@@ -11,6 +11,7 @@ chrome.storage.onChanged.addListener(onChanged)
 
 document.addEventListener('DOMContentLoaded', initOptions)
 document.getElementById('copy-support').addEventListener('click', copySupport)
+document.getElementById('pin-notice').addEventListener('click', pinClick)
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -25,12 +26,32 @@ document
 async function initOptions() {
     console.debug('initOptions')
 
+    checkInstall()
     updateManifest()
     await setShortcuts()
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     updateOptions(options)
+}
+
+function checkInstall() {
+    if (window.location.search.includes('?install=new')) {
+        console.debug('New Install Detected.')
+        history.pushState(null, '', location.href.split('?')[0])
+        const pin = document.getElementById('pin-notice')
+        pin.classList.remove('d-none')
+        if (navigator.userAgent.includes('Firefox/')) {
+            console.log('Firefox')
+            pin.querySelector('.firefox').classList.remove('d-none')
+        } else if (navigator.userAgent.includes('Edg/')) {
+            console.log('Edge')
+            pin.querySelector('.edge').classList.remove('d-none')
+        } else {
+            console.log('Chromium/Other')
+            pin.querySelector('.chromium').classList.remove('d-none')
+        }
+    }
 }
 
 /**
@@ -90,4 +111,15 @@ async function copySupport(event) {
     ]
     await navigator.clipboard.writeText(result.join('\n'))
     showToast('Support Information Copied.')
+}
+
+/**
+ * Pin Animation Click Callback
+ * @function pinClick
+ * @param {MouseEvent} event
+ */
+function pinClick(event) {
+    const div = event.target.closest('div')
+    console.log('div:', div)
+    div.classList.add('d-none')
 }
