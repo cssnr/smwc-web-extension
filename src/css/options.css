@@ -6,7 +6,7 @@ body {
 
 #pin-notice {
     position: fixed;
-    right: 0;
+    right: 10px;
     top: 0;
     cursor: pointer;
     user-select: none;
