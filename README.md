@@ -20,6 +20,7 @@ Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play R
 *   [Support](#support)
 *   [Development](#development)
     -   [Building](#building)
+*   [Contributing](#Contributing)
 
 # Install
 
