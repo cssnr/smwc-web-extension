@@ -26,7 +26,7 @@ body:
   - type: textarea
     id: logs
     validations:
-      required: true
+      required: false
     attributes:
       label: Support Information
       description: Open the extension options, scroll to the bottom, click Copy Support Information and paste below.
