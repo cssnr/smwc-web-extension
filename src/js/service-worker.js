@@ -32,13 +32,12 @@ async function onStartup() {
 async function onInstalled(details) {
     console.log('onInstalled:', details)
     const githubURL = 'https://github.com/cssnr/smwc-web-extension'
-    const options = await Promise.resolve(
-        setDefaultOptions({
-            patchType: 'download',
-            contextMenu: true,
-            showUpdate: false,
-        })
-    )
+    const options = await setDefaultOptions({
+        patchType: 'download',
+        contextMenu: true,
+        showUpdate: false,
+    })
+
     console.debug('options:', options)
     if (options.contextMenu) {
         createContextMenus()
@@ -151,7 +150,7 @@ function createContextMenus() {
  * Set Default Options
  * @function setDefaultOptions
  * @param {Object} defaultOptions
- * @return {Object}
+ * @return {Promise<*|Boolean>}
  */
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions', defaultOptions)

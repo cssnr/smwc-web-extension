@@ -6,7 +6,10 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/build.yaml?logo=github&logoColor=white&label=build)](https://github.com/cssnr/smwc-web-extension/actions/workflows/build.yaml)
 [![Test](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/test.yaml?logo=github&logoColor=white&label=test)](https://github.com/cssnr/smwc-web-extension/actions/workflows/test.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_smwc-web-extension&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_smwc-web-extension)
-[![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/ZrRbfdE6kz)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/cssnr/smwc-web-extension?logo=github&logoColor=white&label=updated)](https://github.com/cssnr/smwc-web-extension/graphs/commit-activity)
+[![GitHub Top Language](https://img.shields.io/github/languages/top/cssnr/smwc-web-extension?logo=htmx&logoColor=white)](https://github.com/cssnr/smwc-web-extension)
+[![GitHub Org Stars](https://img.shields.io/github/stars/cssnr?style=flat&logo=github&logoColor=white)](https://cssnr.github.io/)
+[![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/6pzXJE5)
 # SMWC Web Extension
 
 Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play ROMs Online via the [smwc.world](https://smwc.world) site.
@@ -58,13 +61,13 @@ For help using the web extension, utilize any these resources:
 If you are experiencing an issue/bug or getting unexpected results, use:
 
 - Report an Issue: https://github.com/cssnr/smwc-web-extension/issues
-- Chat with us on Discord: https://discord.gg/wXy6m2X8wY
-- Provide Anonymous Feedback: https://cssnr.github.io/feedback
+- Chat with us on Discord: https://discord.gg/6pzXJE5
+- Provide General Feedback: [https://cssnr.github.io/feedback](https://cssnr.github.io/feedback/?app=SMWC%20Web%20Extension)
 
 Logs can be found inspecting the page (Ctrl+Shift+I), clicking on the Console, and;
 Firefox: toggling Debug logs, Chrome: toggling Verbose from levels dropdown.
 
-Note: When providing anonymous feedback there is no way to follow up and get more information unless you provide a contact method.
+To support this project, see the [Contributing](#Contributing) section at the bottom.
 
 # Development
 
@@ -135,3 +138,22 @@ You may also use an Unbranded Build: [https://wiki.mozilla.org/Add-ons/Extension
 1.  Run `npm run build:firefox` then use `web-ext-artifacts/{name}-firefox-{version}.zip`.
 1.  Open `about:config` search for `xpinstall.signatures.required` and set to `false`.
 1.  Open `about:addons` and drag the zip file to the page or choose Install from File from the Settings wheel.
+
+# Contributing
+
+Currently, the best way to contribute to this project is to give a 5-star rating on
+[Google](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide) or
+[Mozilla](https://addons.mozilla.org/addon/smwc-web-extension) and to star this project on GitHub.
+
+Other Web Extensions I have created and published:
+
+- [Link Extractor](https://github.com/cssnr/link-extractor)
+- [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab)
+- [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader)
+- [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension)
+- [PlayDrift Extension](https://github.com/cssnr/playdrift-extension)
+- [ASN Plus](https://github.com/cssnr/asn-plus)
+- [Aviation Tools](https://github.com/cssnr/aviation-tools)
+- [Text Formatter](https://github.com/cssnr/text-formatter)
+
+For a full list of current projects visit: [https://cssnr.github.io/](https://cssnr.github.io/)
