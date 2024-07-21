@@ -109,6 +109,13 @@ async function patchFormSubmit(event) {
     submitFormBtn.classList.add('disabled')
     const key = document.querySelector('input[name="patchType"]:checked').value
     console.debug('key:', key)
+
+    /**
+     * @param {Object} result
+     * @property {Object} result.error
+     * @property {Array} result.error.__all__
+     * @param key {String}
+     */
     const callback = (result, key) => {
         console.debug('popup callback:', result)
         submitFormBtn.classList.remove('disabled')
@@ -127,5 +134,6 @@ async function patchFormSubmit(event) {
             showToast('Error Patching! Inspect Popup for Details.', 'danger')
         }
     }
+
     patchRom(value, key, callback)
 }

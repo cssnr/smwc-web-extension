@@ -32,19 +32,21 @@ async function onStartup() {
 async function onInstalled(details) {
     console.log('onInstalled:', details)
     const githubURL = 'https://github.com/cssnr/smwc-web-extension'
-    const options = await Promise.resolve(
-        setDefaultOptions({
-            patchType: 'download',
-            contextMenu: true,
-            showUpdate: false,
-        })
-    )
+    const options = await setDefaultOptions({
+        patchType: 'download',
+        contextMenu: true,
+        showUpdate: false,
+    })
+
     console.debug('options:', options)
     if (options.contextMenu) {
         createContextMenus()
     }
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        chrome.runtime.openOptionsPage()
+        // chrome.runtime.openOptionsPage()
+        let url = chrome.runtime.getURL('/html/options.html') + '?install=new'
+        console.log(`url: ${url}`)
+        await chrome.tabs.create({ active: true, url })
     } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
         if (options.showUpdate) {
             const manifest = chrome.runtime.getManifest()
@@ -148,7 +150,7 @@ function createContextMenus() {
  * Set Default Options
  * @function setDefaultOptions
  * @param {Object} defaultOptions
- * @return {Object}
+ * @return {Promise<*|Boolean>}
  */
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions', defaultOptions)
