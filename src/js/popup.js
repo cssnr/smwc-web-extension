@@ -11,7 +11,7 @@ import {
 document.addEventListener('DOMContentLoaded', initPopup)
 document
     .querySelectorAll('a[href]')
-    .forEach((el) => el.addEventListener('click', popupLinks))
+    .forEach((el) => el.addEventListener('click', linkClick))
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -47,29 +47,58 @@ async function initPopup() {
 }
 
 /**
- * Popup Links Click Callback
- * Firefox requires a call to window.close()
- * @function popupLinks
+ * Link Click Callback
+ * Note: Firefox popup requires a call to window.close()
+ * @function linkClick
  * @param {MouseEvent} event
+ * @param {Boolean} [close] This should default to false if used outside the popup
  */
-async function popupLinks(event) {
-    console.debug('popupLinks:', event)
+export async function linkClick(event, close = true) {
+    console.debug('linkClick:', close, event)
     event.preventDefault()
-    const anchor = event.target.closest('a')
-    const href = anchor.getAttribute('href').replace(/^\.+/g, '')
+    const href = event.currentTarget.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
     let url
-    if (href.endsWith('html/options.html')) {
-        chrome.runtime.openOptionsPage()
-        return window.close()
+    if (href.startsWith('#')) {
+        console.debug('return on anchor link')
+        return
+    } else if (href.endsWith('html/options.html')) {
+        await chrome.runtime.openOptionsPage()
+        if (close) window.close()
+        return
     } else if (href.startsWith('http')) {
         url = href
     } else {
         url = chrome.runtime.getURL(href)
     }
-    console.log('url:', url)
-    await chrome.tabs.create({ active: true, url })
-    return window.close()
+    console.debug('url:', url)
+    await activateOrOpen(url)
+    if (close) window.close()
+}
+
+/**
+ * Activate or Open Tab from URL
+ * @function activateOrOpen
+ * @param {String} url
+ * @param {Boolean} [open]
+ * @return {Promise<chrome.tabs.Tab>}
+ */
+export async function activateOrOpen(url, open = true) {
+    console.debug('activateOrOpen:', url, open)
+    // Note: To Get Tab from Tabs (requires host permissions or tabs)
+    const tabs = await chrome.tabs.query({ currentWindow: true })
+    console.debug('tabs:', tabs)
+    for (const tab of tabs) {
+        if (tab.url === url) {
+            console.debug('found tab in tabs:', tab)
+            return await chrome.tabs.update(tab.id, { active: true })
+        }
+    }
+    if (open) {
+        console.debug('tab not found, opening url:', url)
+        return await chrome.tabs.create({ active: true, url })
+    }
+    console.warn('tab not found and open not set!')
 }
 
 /**
