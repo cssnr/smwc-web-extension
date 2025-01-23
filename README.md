@@ -1,8 +1,8 @@
-[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/foalfafgmnglcgpgkhhmcfhjgmdcjide?logo=google&logoColor=white&label=google%20users)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
-[![Mozilla Add-on Users](https://img.shields.io/amo/users/smwc-web-extension?logo=mozilla&label=mozilla%20users)](https://addons.mozilla.org/addon/smwc-web-extension)
+[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/foalfafgmnglcgpgkhhmcfhjgmdcjide?logo=google&logoColor=white&label=users)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+[![Mozilla Add-on Users](https://img.shields.io/amo/users/smwc-web-extension?logo=mozilla&label=users)](https://addons.mozilla.org/addon/smwc-web-extension)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/foalfafgmnglcgpgkhhmcfhjgmdcjide?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/smwc-web-extension?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/smwc-web-extension)
-[![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/smwc-web-extension?logo=github)](https://github.com/cssnr/smwc-web-extension/releases/latest)
+[![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/smwc-web-extension?logo=github&logoColor=white)](https://github.com/cssnr/smwc-web-extension/releases/latest)
 [![Build](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/build.yaml?logo=github&logoColor=white&label=build)](https://github.com/cssnr/smwc-web-extension/actions/workflows/build.yaml)
 [![Test](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/test.yaml?logo=github&logoColor=white&label=test)](https://github.com/cssnr/smwc-web-extension/actions/workflows/test.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_smwc-web-extension&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_smwc-web-extension)
@@ -22,7 +22,7 @@ Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play R
     -   [Building](#building)
 *   [Contributing](#Contributing)
 
-# Install
+## Install
 
 *   [Google Chrome Web Store](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 *   [Mozilla Firefox Add-ons](https://addons.mozilla.org/addon/smwc-web-extension)
@@ -38,7 +38,7 @@ Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play R
 All **Chromium** Based Browsers can install the extension from the
 [Chrome Web Store](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide).
 
-# Features
+## Features
 
 *    Patch or Play ROM's from the Popup
 *    Patch or Play ROM's by Right-clicking Links
@@ -46,13 +46,13 @@ All **Chromium** Based Browsers can install the extension from the
 Please submit a [Feature Request](https://github.com/cssnr/smwc-web-extension/discussions/new?category=feature-requests) for new features.  
 For any issues, bugs or concerns; please [Open an Issue](https://github.com/cssnr/smwc-web-extension/issues/new).  
 
-# Configuration
+## Configuration
 
 You can pin the Addon by clicking the `Puzzle Piece`, find the SMWC Web Extension icon, then;  
 **Chrome,** click the `Pin` icon.  
 **Firefox,** click the `Settings Wheel` and `Pin to Toolbar`.
 
-# Support
+## Support
 
 For help using the web extension, utilize any these resources:
 
@@ -117,7 +117,7 @@ npm run build:firefox
 
 For more information on building, see the scripts section in the [package.json](package.json) file.
 
-## Chrome Setup
+### Chrome Setup
 
 1.  Build or Download a [Release](https://github.com/cssnr/smwc-web-extension/releases).
 1.  Unzip the archive, place the folder where it must remain and note its location for later.
@@ -125,7 +125,7 @@ For more information on building, see the scripts section in the [package.json](
 1.  In the top right, click `Developer Mode` then on the top left click `Load unpacked`.
 1.  Navigate to the folder you extracted in step #3 then click `Select Folder`.
 
-## Firefox Setup
+### Firefox Setup
 
 1.  Build or Download a [Release](https://github.com/cssnr/smwc-web-extension/releases).
 1.  Unzip the archive, place the folder where it must remain and note its location for later.
