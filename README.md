@@ -9,23 +9,26 @@
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/cssnr/smwc-web-extension?logo=github&logoColor=white&label=updated)](https://github.com/cssnr/smwc-web-extension/graphs/commit-activity)
 [![GitHub Top Language](https://img.shields.io/github/languages/top/cssnr/smwc-web-extension?logo=htmx&logoColor=white)](https://github.com/cssnr/smwc-web-extension)
 [![GitHub Org Stars](https://img.shields.io/github/stars/cssnr?style=flat&logo=github&logoColor=white)](https://cssnr.github.io/)
-[![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/6pzXJE5)
+[![Discord](https://img.shields.io/discord/899171661457293343?logo=discord&logoColor=white&label=cssnr%20discord&color=7289da)](https://discord.gg/wXy6m2X8wY)
+[![Discord](https://img.shields.io/discord/536290056571453450?logo=discord&logoColor=white&label=smwc%20discord&color=7289da)](https://discord.gg/6pzXJE5)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-72a5f2?logo=kofi&label=support)](https://ko-fi.com/cssnr)
+
 # SMWC Web Extension
 
 Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play ROMs Online via the [smwc.world](https://smwc.world) site.
 
-*   [Install](#install)
-*   [Features](#features)
-*   [Configuration](#configuration)
-*   [Support](#support)
-*   [Development](#development)
-    -   [Building](#building)
-*   [Contributing](#Contributing)
+- [Install](#install)
+- [Features](#features)
+  - [Configuration](#configuration)
+- [Support](#support)
+- [Development](#development)
+  - [Building](#building)
+- [Contributing](#Contributing)
 
 ## Install
 
-*   [Google Chrome Web Store](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
-*   [Mozilla Firefox Add-ons](https://addons.mozilla.org/addon/smwc-web-extension)
+- [Google Chrome Web Store](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
+- [Mozilla Firefox Add-ons](https://addons.mozilla.org/addon/smwc-web-extension)
 
 [![Chrome](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/chrome_48.png)](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide)
 [![Firefox](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/firefox_48.png)](https://addons.mozilla.org/addon/smwc-web-extension)
@@ -40,13 +43,13 @@ All **Chromium** Based Browsers can install the extension from the
 
 ## Features
 
-*    Patch or Play ROM's from the Popup
-*    Patch or Play ROM's by Right-clicking Links
+- Patch or Play ROM's from the Popup
+- Patch or Play ROM's by Right-clicking Links
 
 Please submit a [Feature Request](https://github.com/cssnr/smwc-web-extension/discussions/new?category=feature-requests) for new features.  
-For any issues, bugs or concerns; please [Open an Issue](https://github.com/cssnr/smwc-web-extension/issues/new).  
+For any issues, bugs or concerns; please [Open an Issue](https://github.com/cssnr/smwc-web-extension/issues/new).
 
-## Configuration
+### Configuration
 
 You can pin the Addon by clicking the `Puzzle Piece`, find the SMWC Web Extension icon, then;  
 **Chrome,** click the `Pin` icon.  
@@ -70,24 +73,27 @@ Firefox: toggling Debug logs, Chrome: toggling Verbose from levels dropdown.
 
 To support this project, see the [Contributing](#Contributing) section at the bottom.
 
-# Development
+## Development
 
 **Quick Start**
 
 First, clone (or download) this repository and change into the directory.
 
 Second, install the dependencies:
+
 ```shell
 npm install
 ```
 
 Finally, to run Chrome or Firefox with web-ext, run one of the following:
+
 ```shell
 npm run chrome
 npm run firefox
 ```
 
 Additionally, to Load Unpacked/Temporary Add-on make a `manifest.json` and run from the [src](src) folder, run one of the following:
+
 ```shell
 npm run manifest:chrome
 npm run manifest:firefox
@@ -104,11 +110,13 @@ Example: `npm run chrome -- --chromium-binary=...`
 
 Install the requirements and copy libraries into the `src/dist` directory by running `npm install`.
 See [gulpfile.js](gulpfile.js) for more information on `postinstall`.
+
 ```shell
 npm install
 ```
 
 To create a `.zip` archive of the [src](src) directory for the desired browser run one of the following:
+
 ```shell
 npm run build
 npm run build:chrome
@@ -142,19 +150,27 @@ You may also use an Unbranded Build: [https://wiki.mozilla.org/Add-ons/Extension
 
 # Contributing
 
-Currently, the best way to contribute to this project is to give a 5-star rating on
+Please consider making a donation to support the development of this project
+and [additional](https://cssnr.com/) open source projects.
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/cssnr)
+
+You can also give a 5-star rating on
 [Google](https://chromewebstore.google.com/detail/smwc-web-extension/foalfafgmnglcgpgkhhmcfhjgmdcjide) or
-[Mozilla](https://addons.mozilla.org/addon/smwc-web-extension) and to star this project on GitHub.
+[Mozilla](https://addons.mozilla.org/addon/smwc-web-extension) and star this project on GitHub.
 
-Other Web Extensions I have created and published:
+Additionally, you can star or provide a 5-star rating on other Web Extensions I have created and published:
 
-- [Link Extractor](https://github.com/cssnr/link-extractor)
-- [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab)
-- [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader)
-- [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension)
-- [PlayDrift Extension](https://github.com/cssnr/playdrift-extension)
-- [ASN Plus](https://github.com/cssnr/asn-plus)
-- [Aviation Tools](https://github.com/cssnr/aviation-tools)
-- [Text Formatter](https://github.com/cssnr/text-formatter)
+- [Link Extractor](https://github.com/cssnr/link-extractor?tab=readme-ov-file#readme)
+- [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab?tab=readme-ov-file#readme)
+- [Auto Auth](https://github.com/cssnr/auto-auth?tab=readme-ov-file#readme)
+- [Cache Cleaner](https://github.com/cssnr/cache-cleaner?tab=readme-ov-file#readme)
+- [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader?tab=readme-ov-file#readme)
+- [Obtainium Extension](https://github.com/cssnr/obtainium-extension?tab=readme-ov-file#readme)
+- [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension?tab=readme-ov-file#readme)
+- [PlayDrift Extension](https://github.com/cssnr/playdrift-extension?tab=readme-ov-file#readme)
+- [ASN Plus](https://github.com/cssnr/asn-plus?tab=readme-ov-file#readme)
+- [Aviation Tools](https://github.com/cssnr/aviation-tools?tab=readme-ov-file#readme)
+- [Text Formatter](https://github.com/cssnr/text-formatter?tab=readme-ov-file#readme)
 
 For a full list of current projects visit: [https://cssnr.github.io/](https://cssnr.github.io/)
