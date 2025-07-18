@@ -4,7 +4,7 @@
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/smwc-web-extension?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/smwc-web-extension)
 [![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/smwc-web-extension?logo=github&logoColor=white)](https://github.com/cssnr/smwc-web-extension/releases/latest)
 [![Build](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/build.yaml?logo=github&logoColor=white&label=build)](https://github.com/cssnr/smwc-web-extension/actions/workflows/build.yaml)
-[![Test](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/test.yaml?logo=github&logoColor=white&label=test)](https://github.com/cssnr/smwc-web-extension/actions/workflows/test.yaml)
+[![Lint](https://img.shields.io/github/actions/workflow/status/cssnr/smwc-web-extension/lint.yaml?logo=github&logoColor=white&label=lint)](https://github.com/cssnr/smwc-web-extension/actions/workflows/lint.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_smwc-web-extension&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_smwc-web-extension)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/cssnr/smwc-web-extension?logo=github&logoColor=white&label=updated)](https://github.com/cssnr/smwc-web-extension/graphs/commit-activity)
 [![GitHub Top Language](https://img.shields.io/github/languages/top/cssnr/smwc-web-extension?logo=htmx&logoColor=white)](https://github.com/cssnr/smwc-web-extension)
