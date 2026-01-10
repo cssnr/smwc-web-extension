@@ -1,7 +1,7 @@
 {
   "name": "SMWC Web Extension",
-  "description": "SMWC.world Web Extension and Browser Addon to Easily Patch and Play SMW ROMs Online.",
-  "homepage_url": "https://smwc.world",
+  "description": "SMWC World Web Extension and Browser Addon to Easily Patch and Play SMW ROMs Online.",
+  "homepage_url": "https://smwcworld.com",
   "author": "Shane",
   "version": "0.0.1",
   "manifest_version": 3,

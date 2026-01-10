@@ -13,21 +13,21 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: "Setup Node 22"
-        uses: actions/setup-node@v4
+      - name: "Setup Node 24"
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: "Install"
         run: |
-          npm install
+          npm ci
 
       - name: "Update Manifest Version"
         if: ${{ github.event_name == 'release' }}
-        uses: cssnr/update-json-value-action@v1
+        uses: cssnr/update-json-value-action@v2
 
       - name: "Build"
         run: |
@@ -35,7 +35,7 @@ jobs:
 
       - name: "Upload to Actions"
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: artifacts
           path: web-ext-artifacts/
@@ -59,7 +59,7 @@ jobs:
       - name: "Package Changelog Action"
         if: ${{ github.event_name == 'release' }}
         continue-on-error: true
-        uses: cssnr/package-changelog-action@v1
+        uses: cssnr/package-changelog-action@v2
 
       - name: "Send Failure Notification"
         if: ${{ failure() && github.event_name == 'release' }}
