@@ -15,7 +15,7 @@
 
 # SMWC Web Extension
 
-Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play ROMs Online via the [smwc.world](https://smwc.world) site.
+Modern Chrome Web Extension and Firefox Browser Addon to easily Patch and Play ROMs Online via the [smwcworld.com](https://smwcworld.com) site.
 
 - [Install](#install)
 - [Features](#features)

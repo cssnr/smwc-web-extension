@@ -18,9 +18,7 @@ document
 document
     .getElementsByName('patchType')
     .forEach((el) => el.addEventListener('change', updatePatchType))
-document
-    .getElementById('patch-form')
-    .addEventListener('submit', patchFormSubmit)
+document.getElementById('patch-form').addEventListener('submit', patchFormSubmit)
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))

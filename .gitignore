@@ -1,8 +1,14 @@
+# Generic
 .idea/
 *.iml
 .vscode/
+node_modules/
+.*cache
+*.log
+eslint_report.json
+# Build
 **/dist/
 build/
-node_modules/
+# App
 web-ext-artifacts/
 src/manifest.json

@@ -9,7 +9,7 @@
  */
 export function patchRom(url, key, callback) {
     console.debug(`patchRom: ${key}: ${url}`)
-    const patcherUrl = 'https://smwc.world/patcher/'
+    const patcherUrl = 'https://smwcworld.com/patcher/'
     const sourceRom =
         'https://github.com/videofindersTV/super-mario-world/raw/master/Super.Mario.World.1.smc'
     const formdata = new FormData()
