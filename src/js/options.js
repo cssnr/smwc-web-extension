@@ -22,8 +22,10 @@ async function initOptions() {
     console.debug('initOptions')
 
     checkInstall()
+    // noinspection ES6MissingAwait
     updateManifest()
-    await setShortcuts()
+    // noinspection ES6MissingAwait
+    setShortcuts()
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)

@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
+    permissions:
+      contents: write
+
     steps:
       - name: "Checkout"
         uses: actions/checkout@v6
@@ -19,7 +22,6 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: npm
 
       - name: "Install"
         run: |
@@ -42,12 +44,9 @@ jobs:
 
       - name: "Upload to Release"
         if: ${{ github.event_name == 'release' }}
-        uses: svenstaro/upload-release-action@v2
+        uses: cssnr/upload-release-action@v1
         with:
-          file: web-ext-artifacts/*
-          tag: ${{ github.ref }}
-          overwrite: true
-          file_glob: true
+          globs: web-ext-artifacts/*
 
       - name: "Update Release Notes Action"
         if: ${{ github.event_name == 'release' }}
@@ -63,6 +62,7 @@ jobs:
 
       - name: "Send Failure Notification"
         if: ${{ failure() && github.event_name == 'release' }}
-        uses: sarisia/actions-status-discord@v1
+        uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708 # v1.16.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          description: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

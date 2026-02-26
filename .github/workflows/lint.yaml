@@ -22,22 +22,21 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          #cache: npm
 
       - name: "Install"
         id: install
         run: |
           npm ci
 
-      - name: "ESLint"
+      - name: "eslint"
         if: ${{ !cancelled() }}
         run: |
           npm run lint
 
-      - name: "Prettier"
+      - name: "prettier"
         if: ${{ !cancelled() }}
         run: |
-          npm run prettier
+          npm run prettier:check
 
       - name: "yamllint"
         if: ${{ !cancelled() }}
@@ -52,3 +51,5 @@ jobs:
       - name: "actionlint"
         if: ${{ !cancelled() }}
         uses: cssnr/actionlint-action@v1
+        with:
+          shellcheck_opts: -e SC2129
