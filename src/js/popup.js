@@ -32,13 +32,14 @@ const patchInput = document.getElementById('patch-input')
 async function initPopup() {
     console.debug('initPopup')
 
+    // noinspection ES6MissingAwait
     updateManifest()
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     updateOptions(options)
     document.querySelector(
-        `input[name="patchType"][value="${options.patchType}"]`
+        `input[name="patchType"][value="${options.patchType}"]`,
     ).checked = true
     patchInput.placeholder = options.patchType
     patchInput.focus()

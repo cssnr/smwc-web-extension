@@ -1,6 +1,6 @@
 // JS Background Service Worker
 
-import { patchRom } from './exports.js'
+import { githubURL, patchRom } from './exports.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
@@ -31,7 +31,6 @@ async function onStartup() {
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
-    const githubURL = 'https://github.com/cssnr/smwc-web-extension'
     const options = await setDefaultOptions({
         patchType: 'download',
         contextMenu: true,

@@ -15,8 +15,9 @@ body:
     validations:
       required: false
     attributes:
-      label: URL
-      description: Please provide a link to the repository or workflow in question if possible.
+      label: Site Link
+      description: Please provide a link to the site you are having issues on if possible.
+      placeholder: https://example.com/
 
   - type: textarea
     id: description
@@ -30,14 +31,13 @@ body:
   - type: textarea
     id: logs
     validations:
-      required: false
+      required: true
     attributes:
-      label: Log Output
-      description: Paste any relevant logs or output in this box.
-      placeholder: Output is automatically wrapped in a code block.
+      label: Support Information
+      description: Open the extension options, scroll to the bottom, click Copy Support Information and paste below.
       render: shell
 
   - type: markdown
     attributes:
       value: |
-        Thank you for taking the time to make this report!
+        All issues/bugs that we can verify will be fixed. Thank you for taking the time to make this report!

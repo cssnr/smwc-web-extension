@@ -1,5 +1,6 @@
 {
   "name": "smwc-web-extension",
+  "private": true,
   "scripts": {
     "postinstall": "npx gulp",
     "lint:eslint": "npx eslint src/js",
@@ -12,20 +13,23 @@
     "build:chrome": "npm run manifest:chrome && npx web-ext build -n {name}-chrome-{version}.zip -o -s src",
     "build:firefox": "npm run manifest:firefox && npx web-ext build -n {name}-firefox-{version}.zip -o -s src",
     "build": "npm run build:chrome && npm run build:firefox",
-    "prettier": "npx prettier --check ."
+    "prettier:check": "npx prettier --check .",
+    "prettier:write": "npx prettier --write .",
+    "actionlint": "actionlint",
+    "yamllint": "yamllint -c .github/yamllint.yaml ."
   },
   "dependencies": {
-    "@eslint/js": "^9.39.2",
-    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@fortawesome/fontawesome-free": "^7.2.0",
     "bootstrap": "^5.3.8",
-    "jquery": "^3.7.1"
+    "jquery": "^4.0.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.1.33",
-    "eslint": "^9.39.2",
+    "@eslint/js": "^10.0.1",
+    "@types/chrome": "^0.1.37",
+    "eslint": "^10.0.2",
     "gulp": "^5.0.1",
     "json-merger": "^3.0.0",
-    "prettier": "^3.7.4",
-    "web-ext": "^9.2.0"
+    "prettier": "^3.8.1",
+    "web-ext": "^9.3.0"
   }
 }
