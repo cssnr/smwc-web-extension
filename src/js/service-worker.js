@@ -14,7 +14,11 @@ chrome.storage.onChanged.addListener(onChanged)
  */
 async function onStartup() {
     console.log('onStartup')
-    if (typeof browser !== 'undefined') {
+    // noinspection JSUnresolvedReference
+    if (
+        typeof browser !== 'undefined' &&
+        typeof browser?.runtime?.getBrowserInfo === 'function'
+    ) {
         console.log('Firefox CTX Menu Workaround')
         const { options } = await chrome.storage.sync.get(['options'])
         console.debug('options:', options)
